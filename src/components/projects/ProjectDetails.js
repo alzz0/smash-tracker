@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import moment from "moment";
 function ProjectDetails(props) {
   const { project } = props;
   const id = props.match.params.id;
@@ -18,9 +19,10 @@ function ProjectDetails(props) {
             <div>
               Posted by {project.authorFirstName} {project.authorLastName}
             </div>
-            <div>feb 24th</div>
+            <div> {moment(project.createdAt.toDate()).calendar()}</div>
           </div>
         </div>
+        <button onClick={() => props.history.goBack()}>Back</button>
       </div>
     );
   } else {
