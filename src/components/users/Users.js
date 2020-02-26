@@ -20,9 +20,7 @@ function Users({ users, user }) {
                       <span className="card-title">
                         {user[1].firstName} {user[1].lastName}
                       </span>
-                      <p>
-                        {"project.authorFirstName"} {"project.authorLastName"}
-                      </p>
+                      <p>{"your data will be here"}</p>
                     </div>
                   </div>
                 </Link>

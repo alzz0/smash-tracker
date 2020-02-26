@@ -9,6 +9,7 @@ function SignUp({ auth, authError, signUp }) {
     firstName: "",
     lastName: ""
   });
+  const [loading, setLoading] = useState(false);
 
   if (auth.uid) return <Redirect to="/" />;
   function handleChange(e) {
@@ -16,9 +17,13 @@ function SignUp({ auth, authError, signUp }) {
   }
 
   function handleSubmit(e) {
+    setLoading(true);
     e.preventDefault();
     console.log(e);
-    signUp(user);
+    setTimeout(() => {
+      signUp(user);
+      setLoading(false);
+    }, 3000);
   }
   return (
     <div className="container">
@@ -27,25 +32,35 @@ function SignUp({ auth, authError, signUp }) {
 
         <div className="input-field">
           <label htmlFor="email">Email</label>
-          <input onChange={handleChange} type="email" id="email" />
+          <input required onChange={handleChange} type="email" id="email" />
         </div>
 
         <div className="input-field">
           <label htmlFor="password">Password</label>
-          <input onChange={handleChange} type="password" id="password" />
+          <input
+            required
+            onChange={handleChange}
+            type="password"
+            id="password"
+          />
         </div>
 
         <div className="input-field">
           <label htmlFor="firstName">First Name</label>
-          <input onChange={handleChange} type="text" id="firstName" />
+          <input required onChange={handleChange} type="text" id="firstName" />
         </div>
 
         <div className="input-field">
           <label htmlFor="lastName">Last Name</label>
-          <input onChange={handleChange} type="text" id="lastName" />
+          <input required onChange={handleChange} type="text" id="lastName" />
         </div>
         <div className="input-field">
-          <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+          <button
+            disabled={loading ? true : false}
+            className="btn pink lighten-1 z-depth-0"
+          >
+            {loading ? "Signing you up!" : "Sign Up"}
+          </button>
           <div className="red-text center">
             {authError ? <p>{authError}</p> : null}
           </div>
