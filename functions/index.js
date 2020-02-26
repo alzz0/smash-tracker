@@ -7,9 +7,7 @@ const createNotification = notification => {
     .firestore()
     .collection("notifications")
     .add(notification)
-    .then(doc => {
-      console.log("notifcation added", doc);
-    });
+    .then(doc => {});
 };
 
 exports.projectCreated = functions.firestore
@@ -31,11 +29,13 @@ exports.userJoined = functions.auth.user().onCreate(user => {
     .doc(user.uid)
     .get()
     .then(doc => {
+      console.log(doc.data);
       const newUser = doc.data();
 
       const notification = {
         content: "Joined the Party ",
         user: `${newUser.firstName} ${newUser.lastName}`,
+        userId: newUser.id,
         time: admin.firestore.FieldValue.serverTimestamp()
       };
       return createNotification(notification);
