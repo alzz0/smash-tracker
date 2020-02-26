@@ -1,7 +1,8 @@
 import React from "react";
 import moment from "moment";
-
-const Notifications = props => {
+import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
+const Notifications = (props, auth) => {
   const { notifications } = props;
   return (
     <div className="section">
@@ -13,7 +14,12 @@ const Notifications = props => {
               notifications.map(item => {
                 return (
                   <li key={item.id}>
-                    <span className="pink-text"> {item.user} </span>
+                    <Link
+                      to={`/profile/${props.auth.uid}`}
+                      className="pink-text"
+                    >
+                      {item.user}{" "}
+                    </Link>
                     <span>{item.content}</span>
                     <div className="grey-text note-date">
                       {moment(item.time.toDate()).fromNow()}
@@ -28,4 +34,8 @@ const Notifications = props => {
   );
 };
 
-export default Notifications;
+const mapStateToProps = state => ({
+  auth: state.firebase.auth
+});
+
+export default connect(mapStateToProps)(withRouter(Notifications));

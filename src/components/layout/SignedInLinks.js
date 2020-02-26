@@ -1,26 +1,37 @@
 import React, { Profiler } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
-function SignedInLinks(props) {
+function SignedInLinks(props, auth) {
   return (
     <ul className="right">
       <li>
-        <NavLink to="/create">New Project</NavLink>
+        <NavLink to="/create">New Post</NavLink>
       </li>
       <li>
         <a onClick={props.signOut}>Log Out</a>
       </li>
       <li>
-        <NavLink to="/" className="btn btn-floating pink lighten-1">
+        <span
+          to="/"
+          className="btn btn-floating pink lighten-1"
+          onClick={() => props.history.push(`/profile/${props.auth.uid}`)}
+        >
           {props.profile.initial}
-        </NavLink>
+        </span>
       </li>
     </ul>
   );
 }
 
+const mapStateToProps = state => ({
+  auth: state.firebase.auth
+});
+
 const mapDispatchToProps = dispatch => ({
   signOut: () => dispatch(signOut())
 });
-export default connect(null, mapDispatchToProps)(SignedInLinks);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SignedInLinks));

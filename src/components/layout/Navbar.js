@@ -8,8 +8,8 @@ function Navbar({ auth, profile }) {
   return (
     <nav className="nav-wrapper grey darken-3">
       <div className="container">
-        <Link to="/" className="brand-logo">
-          smashbros
+        <Link to="/" className="brand-logo left ">
+          SMASH
         </Link>
         {auth.isLoaded &&
           (auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />)}

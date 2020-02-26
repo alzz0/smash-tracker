@@ -19,7 +19,7 @@ function CreateProject({ createProject, auth, history }) {
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className="white">
-        <h5 className="grey-text text-darken-3">New Project</h5>
+        <h5 className="grey-text text-darken-3">New Post</h5>
 
         <div className="input-field">
           <label htmlFor="title">Title</label>

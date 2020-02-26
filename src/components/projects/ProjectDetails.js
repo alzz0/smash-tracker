@@ -22,7 +22,12 @@ function ProjectDetails(props) {
             <div> {moment(project.createdAt.toDate()).calendar()}</div>
           </div>
         </div>
-        <button onClick={() => props.history.goBack()}>Back</button>
+        <button
+          className="waves-effect waves-light btn"
+          onClick={() => props.history.goBack()}
+        >
+          Back
+        </button>
       </div>
     );
   } else {
