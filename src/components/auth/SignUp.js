@@ -20,10 +20,21 @@ function SignUp({ auth, authError, signUp }) {
     setLoading(true);
     e.preventDefault();
     console.log(e);
-    setTimeout(() => {
-      signUp(user);
-      setLoading(false);
-    }, 3000);
+    if (
+      user.email.length > 0 &&
+      user.password.length > 0 &&
+      user.firstName.length > 0 &&
+      user.lastName.length > 0
+    ) {
+      console.log("yes");
+      setTimeout(() => {
+        console.log(user);
+        signUp(user);
+        setLoading(false);
+      }, 3000);
+    } else {
+      console.log("no");
+    }
   }
   return (
     <div className="container">
@@ -59,7 +70,9 @@ function SignUp({ auth, authError, signUp }) {
             disabled={loading ? true : false}
             className="btn pink lighten-1 z-depth-0"
           >
-            {loading ? "Signing you up!" : "Sign Up"}
+            {loading
+              ? `Hang tight ${user.firstName} signing you up ...`
+              : "Sign Up"}
           </button>
           <div className="red-text center">
             {authError ? <p>{authError}</p> : null}

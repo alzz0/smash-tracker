@@ -3,11 +3,12 @@ const admin = require("firebase-admin");
 admin.initializeApp(functions.config().firebase);
 
 const createNotification = notification => {
+  console.log(notificationu);
   return admin
     .firestore()
     .collection("notifications")
     .add(notification)
-    .then(doc => {});
+    .then(doc => console.log("notification added", doc));
 };
 
 exports.projectCreated = functions.firestore
@@ -23,21 +24,28 @@ exports.projectCreated = functions.firestore
   });
 
 exports.userJoined = functions.auth.user().onCreate(user => {
+  console.log(user);
   return admin
     .firestore()
     .collection("users")
     .doc(user.uid)
     .get()
     .then(doc => {
-      console.log(doc.data);
+      console.log(doc);
       const newUser = doc.data();
+      const firstName = newUser.firstName;
+      const lastName = newUser.lastName;
 
       const notification = {
         content: "Joined the Party ",
-        user: `${newUser.firstName} ${newUser.lastName}`,
         userId: newUser.id,
+        user: `${firstName} ${lastName}`,
+
         time: admin.firestore.FieldValue.serverTimestamp()
       };
       return createNotification(notification);
+    })
+    .catch(error => {
+      console.log(error);
     });
 });

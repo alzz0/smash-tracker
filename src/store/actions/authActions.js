@@ -32,7 +32,7 @@ export const signUp = newUser => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
-
+    console.log(newUser);
     firebase
       .auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
@@ -48,8 +48,9 @@ export const signUp = newUser => {
             id: res.user.uid
           });
       })
-      .then(() => {
+      .then(res => {
         dispatch({ type: "SIGNUP_SUCCESS" });
+        console.log(res);
       })
       .catch(err => {
         dispatch({ type: "SIGNUP_ERROR", err });
