@@ -1,14 +1,21 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function SignedInLinks() {
   return (
-    <ul className="right">
+    <ul className='right'>
       <li>
-        <NavLink to="/signup">Signup</NavLink>
+        <NavLink to='/create'>NewPost</NavLink>
       </li>
       <li>
-        <NavLink to="/signin">Login</NavLink>
+        <NavLink to='/users'>Smashers</NavLink>
+      </li>
+      <li>
+        <NavLink to='/signup'>Signup</NavLink>
+      </li>
+
+      <li>
+        <NavLink to='/signin'>Login</NavLink>
       </li>
     </ul>
   );
