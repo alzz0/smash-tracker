@@ -1,15 +1,15 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 function Profile({ user }) {
   return (
     <div>
       <h3>
-        Name:{user && user.firstName} {user && user.lastName}{" "}
+        Name:{user && user.firstName} {user && user.lastName}
       </h3>
-      <h4>Points: ...</h4>
+      <h4>Score: {user && user.points}</h4>
     </div>
   );
 }
@@ -20,7 +20,7 @@ const mapStateToProps = (state, ownProps) => {
   const user = users ? users[id] : null;
 
   return {
-    user: user
+    user: user,
   };
 };
 
@@ -28,7 +28,7 @@ export default compose(
   connect(mapStateToProps),
   firestoreConnect([
     {
-      collection: "users"
-    }
+      collection: 'users',
+    },
   ])
 )(withRouter(Profile));

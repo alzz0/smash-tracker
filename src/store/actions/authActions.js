@@ -1,5 +1,3 @@
-import { firestore } from "firebase";
-
 export const signIn = credentials => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -32,12 +30,14 @@ export const signUp = newUser => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
-    console.log(newUser);
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
+
       .then(res => {
         console.log(res);
+        console.log(newUser);
         return firestore
           .collection("users")
           .doc(res.user.uid)
@@ -45,12 +45,12 @@ export const signUp = newUser => {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             initial: newUser.firstName[0] + newUser.lastName[0],
-            id: res.user.uid
+            id: res.user.uid,
+            points: 0
           });
       })
-      .then(res => {
+      .then(() => {
         dispatch({ type: "SIGNUP_SUCCESS" });
-        console.log(res);
       })
       .catch(err => {
         dispatch({ type: "SIGNUP_ERROR", err });

@@ -3,7 +3,6 @@ const admin = require("firebase-admin");
 admin.initializeApp(functions.config().firebase);
 
 const createNotification = notification => {
-  console.log(notificationu);
   return admin
     .firestore()
     .collection("notifications")
@@ -33,13 +32,11 @@ exports.userJoined = functions.auth.user().onCreate(user => {
     .then(doc => {
       console.log(doc);
       const newUser = doc.data();
-      const firstName = newUser.firstName;
-      const lastName = newUser.lastName;
 
       const notification = {
         content: "Joined the Party ",
         userId: newUser.id,
-        user: `${firstName} ${lastName}`,
+        user: `${newUser.firstName} ${newUser.lastName}`,
 
         time: admin.firestore.FieldValue.serverTimestamp()
       };
