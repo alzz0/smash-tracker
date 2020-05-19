@@ -12,31 +12,7 @@ import CreateProject from './components/projects/CreateProject.js';
 import Profile from './components/profile/Profile.js';
 import Users from './components/users/Users.js';
 import { setHighestScore } from './store/actions/userAction';
-function App({ users, setHighestScore }) {
-  // var highestNum = 0;
-  // useEffect(() => {
-  //   setHighestScore(highestNum);
-  // });
-  // var scoreBoard =
-  //   users &&
-  //   users.map(user => {
-  //     return user.points;
-  //   });
-  // calculate();
-  // var champ = Math.max(scoreBoard);
-  // function calculate() {
-  //   //var highestNum = 0;
-  //   if (scoreBoard) {
-  //     for (var i = 0; i < scoreBoard.length; i++) {
-  //       if (scoreBoard[i] > highestNum) {
-  //         highestNum = scoreBoard[i];
-  //       }
-  //       console.log(scoreBoard[i]);
-  //       console.log('hightestnum', highestNum);
-  //     }
-  //   }
-  // }
-
+function App() {
   return (
     <BrowserRouter>
       <div className='App'>
@@ -55,18 +31,4 @@ function App({ users, setHighestScore }) {
   );
 }
 
-const mapStateToProps = state => {
-  const users = state.firestore.data.users;
-
-  return {
-    users: users,
-  };
-};
-export default compose(
-  connect(mapStateToProps, { setHighestScore }),
-  firestoreConnect([
-    {
-      collection: 'users',
-    },
-  ])
-)(App);
+export default App;

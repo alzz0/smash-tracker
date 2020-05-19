@@ -7,9 +7,10 @@ function Profile({ user }) {
   return (
     <div>
       <h3>
-        Name:{user && user.firstName} {user && user.lastName}
+        Name: {user && user.firstName} {user && user.lastName}
       </h3>
       <h4>Score: {user && user.points}</h4>
+      <h4>Bio: {user && user.bio}</h4>
     </div>
   );
 }
