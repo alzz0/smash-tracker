@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import { star } from '../img/star.png';
+import star from '../../images/star.png';
 import {
   incrementPoint,
   decrementPoint,
@@ -49,6 +49,14 @@ function Users({ setHighestScore, users, incrementPoint, decrementPoint }) {
         <div className='col s12 m6'>
           <Link key={user[1].id} to={`/profile/${user[1].id}`}>
             <div className='card z-depth-0 project-summary'>
+              {user[1].points == highestNum ? (
+                <img
+                  style={{ position: 'absolute', right: '0' }}
+                  width={50}
+                  height={50}
+                  src={star}
+                />
+              ) : null}
               <div className='card-content grey-text text-darken-3'>
                 <span
                   style={{
