@@ -5,10 +5,10 @@ export const signIn = credentials => {
       .auth()
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
-        dispatch({ type: "LOGIN_SUCCESS" });
+        dispatch({ type: 'LOGIN_SUCCESS' });
       })
       .catch(err => {
-        dispatch({ type: "LOGIN_ERROR", err });
+        dispatch({ type: 'LOGIN_ERROR', err });
       });
   };
 };
@@ -21,7 +21,7 @@ export const signOut = () => {
       .auth()
       .signOut()
       .then(() => {
-        dispatch({ type: "SIGNOUT_SUCCESS" });
+        dispatch({ type: 'SIGNOUT_SUCCESS' });
       });
   };
 };
@@ -36,24 +36,22 @@ export const signUp = newUser => {
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
 
       .then(res => {
-        console.log(res);
-        console.log(newUser);
         return firestore
-          .collection("users")
+          .collection('users')
           .doc(res.user.uid)
           .set({
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             initial: newUser.firstName[0] + newUser.lastName[0],
             id: res.user.uid,
-            points: 0
+            points: 0,
           });
       })
       .then(() => {
-        dispatch({ type: "SIGNUP_SUCCESS" });
+        dispatch({ type: 'SIGNUP_SUCCESS' });
       })
       .catch(err => {
-        dispatch({ type: "SIGNUP_ERROR", err });
+        dispatch({ type: 'SIGNUP_ERROR', err });
       });
   };
 };

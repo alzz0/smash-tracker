@@ -22,12 +22,11 @@ function Users({
   const [points, setPoints] = useState(0);
 
   var highestNum = 0;
-  console.log(users);
 
   useEffect(() => {
     setHighestScore(highestNum);
   });
-  console.log(auth.uid);
+
   var scoreBoard =
     users &&
     users.map(user => {
@@ -42,8 +41,6 @@ function Users({
         if (scoreBoard[i] > highestNum) {
           highestNum = scoreBoard[i];
         }
-        console.log(scoreBoard[i]);
-        console.log('hightestnum', highestNum);
       }
     }
   }
@@ -109,7 +106,6 @@ function Users({
       );
     });
   let sortedData = data && data.sort((a, b) => b - a);
-  console.log(sortedData && sortedData.points);
 
   return (
     <div className='dashboard-container'>

@@ -3,7 +3,6 @@ const initState = {
 };
 
 export default function (state = initState, action) {
-  console.log(action.payload);
   switch (action.type) {
     case 'SET_HIGHEST_SCORE':
       return { state: action.payload };

@@ -25,8 +25,6 @@ function Dashboard({ projects, auth, notifications, users, setHighestScore }) {
         if (scoreBoard[i] > highestNum) {
           highestNum = scoreBoard[i];
         }
-        console.log(scoreBoard[i]);
-        console.log('hightestnum', highestNum);
       }
     }
   }

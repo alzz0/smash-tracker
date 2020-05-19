@@ -25,11 +25,21 @@ export const decrementPoint = userId => {
 };
 
 export const setHighestScore = score => (dispatch, getState) => {
-  console.log(score);
-
   dispatch({
     type: 'SET_HIGHEST_SCORE',
     payload: score,
   });
-  console.log(score);
+};
+
+export const createbio = bio => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    // make async call to db
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    const profile = getState().firebase.profile;
+    const authorId = getState().firebase.auth.uid;
+    const db = firebase.firestore();
+    const userBio = db.collection('users').doc(authorId);
+    userBio.update(bio);
+  };
 };
