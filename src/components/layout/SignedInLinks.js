@@ -1,24 +1,24 @@
-import React, { Profiler } from "react";
-import { NavLink, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { signOut } from "../../store/actions/authActions";
-import Users from "../users/Users.js";
+import React, { Profiler } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signOut } from '../../store/actions/authActions';
+import Users from '../users/Users.js';
 function SignedInLinks(props, auth) {
   return (
-    <ul className="right">
+    <ul className='right'>
       <li>
-        <NavLink to="/create">New Post</NavLink>
+        <NavLink to='/create'>New Post</NavLink>
       </li>
       <li>
-        <NavLink to="/users">Smashers</NavLink>
+        <NavLink to='/users'>Smashers</NavLink>
       </li>
       <li>
         <a onClick={props.signOut}>Log Out</a>
       </li>
       <li>
         <span
-          to="/"
-          className="btn btn-floating pink lighten-1"
+          to='/'
+          className='btn btn-floating pink lighten-1'
           onClick={() => props.history.push(`/profile/${props.auth.uid}`)}
         >
           {props.profile.initial}
@@ -29,11 +29,11 @@ function SignedInLinks(props, auth) {
 }
 
 const mapStateToProps = state => ({
-  auth: state.firebase.auth
+  auth: state.firebase.auth,
 });
 
 const mapDispatchToProps = dispatch => ({
-  signOut: () => dispatch(signOut())
+  signOut: () => dispatch(signOut()),
 });
 export default connect(
   mapStateToProps,

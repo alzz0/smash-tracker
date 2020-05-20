@@ -2,16 +2,21 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { dislikePost, likePost } from '../../store/actions/projectActions';
-function ProjectSummary({ project, dislikePost, likePost }) {
+function ProjectSummary({ project, dislikePost, likePost, auth }) {
+  console.log(project.createdAt);
   function dislike(e) {
     e.preventDefault();
     e.stopPropagation();
-    dislikePost(project.id);
+    if (auth.uid) {
+      dislikePost(project.id);
+    }
   }
   function like(e) {
     e.preventDefault();
     e.stopPropagation();
-    likePost(project.id);
+    if (auth.uid) {
+      likePost(project.id);
+    }
   }
   return (
     <div className='card z-depth-0 project-summary'>
@@ -39,4 +44,9 @@ function ProjectSummary({ project, dislikePost, likePost }) {
   );
 }
 
-export default connect(null, { dislikePost, likePost })(ProjectSummary);
+const mapDispathToprops = state => ({
+  auth: state.firebase.auth,
+});
+export default connect(mapDispathToprops, { dislikePost, likePost })(
+  ProjectSummary
+);

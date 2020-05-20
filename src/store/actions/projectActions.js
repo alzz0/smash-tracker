@@ -17,14 +17,12 @@ export const createProject = project => {
         dispatch({ type: 'CREATE_PROJECT', project });
       })
       .catch(err => {
-        console.log(err);
         dispatch({ type: 'CREATE_PROJECT_ERROR', err });
       });
   };
 };
 
 export const dislikePost = postId => {
-  console.log(postId);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
 
@@ -38,7 +36,6 @@ export const dislikePost = postId => {
 };
 
 export const likePost = postId => {
-  console.log(postId);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
 
