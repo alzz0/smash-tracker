@@ -20,10 +20,10 @@ const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
-    reduxFirestore(firebase, fbConfig)
+    reduxFirestore(firebase, fbConfig),
 
     // remove in production
-    // ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 

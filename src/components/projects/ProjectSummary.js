@@ -17,11 +17,11 @@ function ProjectSummary({ project, dislikePost, likePost }) {
     <div className='card z-depth-0 project-summary'>
       <div style={{ position: 'absolute', right: '5px', bottom: '0' }}>
         <span onClick={e => like(e)}>
-          <i class='material-icons'>thumb_up</i>
+          <i className='material-icons'>thumb_up</i>
           {project.likes}
         </span>
         <span style={{ marginLeft: '10px' }} onClick={e => dislike(e)}>
-          <i class='material-icons'>thumb_down</i>
+          <i className='material-icons'>thumb_down</i>
           {project.dislikes}
         </span>
       </div>

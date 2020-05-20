@@ -62,6 +62,6 @@ export default compose(
       collection: 'projects',
       orderBy: ['createdAt', 'desc'],
     },
-    { collection: 'notifications', limit: 6, orderBy: ['time', 'desc'] },
+    { collection: 'notifications', limit: 10, orderBy: ['time', 'desc'] },
   ])
 )(Dashboard);

@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { createbio } from '../../store/actions/userAction';
-function Profile({ user, createbio }) {
+function Profile({ user, createbio, auth }) {
   const [bio, setBio] = useState({ bio: '' });
   const [edit, setEdit] = useState(false);
   function handleSubmit(e) {
@@ -29,7 +29,9 @@ function Profile({ user, createbio }) {
           <span style={{ marginLeft: '10px' }}>
             <i
               style={{ cursor: 'pointer' }}
-              onClick={() => setEdit(!edit)}
+              onClick={() => {
+                auth.uid === user.id && setEdit(!edit);
+              }}
               className='material-icons'
             >
               mode_edit
@@ -74,6 +76,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     user: user,
+    auth: state.firebase.auth,
   };
 };
 
