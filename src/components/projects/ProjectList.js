@@ -1,9 +1,9 @@
-import React from "react";
-import ProjectSummary from "./ProjectSummary.js";
-import { Link } from "react-router-dom";
+import React from 'react';
+import ProjectSummary from './ProjectSummary.js';
+import { Link } from 'react-router-dom';
 function ProjectList({ projects }) {
   return (
-    <div className="project-list seciton">
+    <div className='project-list seciton'>
       {projects &&
         projects.map(project => {
           return (
