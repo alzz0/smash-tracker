@@ -3,7 +3,6 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { dislikePost, likePost } from '../../store/actions/projectActions';
 function ProjectSummary({ project, dislikePost, likePost, auth }) {
-  console.log(project.createdAt);
   function dislike(e) {
     e.preventDefault();
     e.stopPropagation();

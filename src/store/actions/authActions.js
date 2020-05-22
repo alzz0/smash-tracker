@@ -45,6 +45,7 @@ export const signUp = newUser => {
             initial: newUser.firstName[0] + newUser.lastName[0],
             id: res.user.uid,
             points: 0,
+            bio: '',
           });
       })
       .then(() => {
