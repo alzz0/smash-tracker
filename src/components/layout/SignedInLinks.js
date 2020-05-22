@@ -10,7 +10,7 @@ function SignedInLinks(props, auth) {
         <NavLink to='/create'>New Post</NavLink>
       </li>
       <li>
-        <NavLink to='/users'>Smashers</NavLink>
+        <NavLink to='/users'>Fighters</NavLink>
       </li>
       <li>
         <a onClick={props.signOut}>Log Out</a>

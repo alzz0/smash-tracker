@@ -8,7 +8,7 @@ function SignedInLinks() {
         <NavLink to='/create'>NewPost</NavLink>
       </li>
       <li>
-        <NavLink to='/users'>Smashers</NavLink>
+        <NavLink to='/users'>Fighters</NavLink>
       </li>
       <li>
         <NavLink to='/signup'>Signup</NavLink>
