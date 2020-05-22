@@ -8,7 +8,6 @@ import {
 } from '../../store/actions/projectActions';
 import moment from 'moment';
 function ProjectDetails(props) {
-  console.log(props);
   const [edit, setEdit] = useState(false);
   const { project, deletePost, history, updateProjectContent, auth } = props;
   const id = props.match.params.id;

@@ -5,6 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import star from '../../images/star.png';
 import { superUsers } from '../../constants';
+
 import {
   incrementPoint,
   decrementPoint,
@@ -91,12 +92,12 @@ function Users({
           <button
             className='btn-floating btn-large waves-effect waves-light red'
             onClick={() => decrementPoint(user[1].id)}
-            disabled={auth.uid === superUsers ? false : true}
+            disabled={superUsers.includes(auth.uid) ? false : true}
           >
             <i className=' material-icons'>exposure_neg_1</i>
           </button>
           <button
-            disabled={auth.uid === superUsers ? false : true}
+            disabled={superUsers.includes(auth.uid) ? false : true}
             className='btn-floating btn-large waves-effect waves-light red'
             onClick={() => incrementPoint(user[1].id)}
           >

@@ -11,7 +11,7 @@ function Profile({ user, createbio, auth, history }) {
 
   if (auth.createdAt) {
     var date = auth.createdAt;
-    console.log(date);
+
     var day = new Date(parseInt(date, 10));
     var dayString = day.toString('MM/dd/yy HH:mm:ss');
   }
