@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import star from '../../images/star.png';
+import './users.css';
 import { superUsers } from '../../constants';
 
 import {
@@ -22,56 +23,108 @@ function Users({
   const newObj = users && Object.entries(users);
   const [points, setPoints] = useState(0);
 
-  var highestNum = 0;
+  // var highestNum = undefined;
+  // var secondHighest = undefined;
+  // var thirdHighest = undefined;
 
-  useEffect(() => {
-    setHighestScore(highestNum);
-  });
+  // useEffect(() => {
+  //   setHighestScore(highestNum);
+  // });
 
-  var scoreBoard =
-    users &&
-    users.map(user => {
-      return user.points;
-    });
-  calculate();
-  var champ = Math.max(scoreBoard);
-  function calculate() {
-    //var highestNum = 0;
-    if (scoreBoard) {
-      for (var i = 0; i < scoreBoard.length; i++) {
-        if (scoreBoard[i] > highestNum) {
-          highestNum = scoreBoard[i];
-        }
-      }
-    }
-  }
+  // var scoreBoard =
+  //   users &&
+  //   users.map(user => {
+  //     return user.points;
+  //   });
+  // calculate();
+
+  // function calculate() {
+  //   if (scoreBoard) {
+  //     for (var i = 0; i < scoreBoard.length; i++) {
+  //       if (scoreBoard[i] > highestNum) {
+  //         highestNum = scoreBoard[i];
+  //       }
+  //     }
+  //     // Get second highest score
+  //     let indexOfHighest = scoreBoard.indexOf(highestNum);
+
+  //     scoreBoard.splice(indexOfHighest, 1);
+  //     secondHighest = Math.max(...scoreBoard);
+  //   }
+
+  //   // Get third highest score
+  //   if (secondHighest) {
+  //     if (secondHighest === secondHighest) {
+  //       var indexOfSecondHighest = scoreBoard.indexOf(highestNum);
+  //       console.log(secondHighest);
+  //     }
+
+  //     scoreBoard.splice(indexOfSecondHighest, 1);
+  //     thirdHighest = Math.max(...scoreBoard);
+  //   }
+  // }
 
   let data =
     newObj &&
-    newObj.reverse().map(user => {
+    newObj.reverse().map((user, index) => {
       return (
         <div className='col s12 m6' key={user[1].id}>
           <Link key={user[1].id} to={`/profile/${user[1].id}`}>
             <div className='card z-depth-0 project-summary'>
-              {user[1].points == highestNum ? (
-                <img
-                  style={{ position: 'absolute', right: '0' }}
-                  width={50}
-                  height={50}
-                  src={star}
-                />
-              ) : null}
+              {index === 0 ? (
+                <i
+                  style={{
+                    color: 'gold',
+                    position: 'absolute',
+                    right: '0',
+                    fontSize: '65px',
+                  }}
+                  className='material-icons'
+                >
+                  star
+                </i>
+              ) : index === 1 ? (
+                <i
+                  style={{
+                    color: '#aaa9ad',
+                    position: 'absolute',
+                    right: '0',
+                    fontSize: '65px',
+                  }}
+                  className='material-icons'
+                >
+                  star
+                </i>
+              ) : index === 2 ? (
+                <i
+                  style={{
+                    color: '#b08d57',
+                    position: 'absolute',
+                    right: '0',
+                    fontSize: '65px',
+                  }}
+                  className='material-icons'
+                >
+                  star
+                </i>
+              ) : (
+                ''
+              )}
+
               <div
                 style={{ height: '200px' }}
                 className='card-content grey-text text-darken-3'
               >
                 <span
-                  style={{
-                    color: user[1].points == highestNum ? 'gold' : '#000',
-                    lineHeight: 'normal',
-                    fontWeight: '500',
-                  }}
-                  className='card-title'
+                  className={`card-title custom-card ${
+                    index === 0
+                      ? 'gold'
+                      : index === 1
+                      ? 'silver'
+                      : index === 2
+                      ? 'bronze'
+                      : ''
+                  }`}
                 >
                   {user[1].firstName} {user[1].lastName}
                   <p
@@ -106,7 +159,6 @@ function Users({
         </div>
       );
     });
-  let sortedData = data && data.sort((a, b) => b - a);
 
   return (
     <div className='dashboard-container'>
@@ -138,16 +190,3 @@ export default compose(
     },
   ])
 )(withRouter(Users));
-
-// citiesRef.orderBy("name").limit(3)
-
-// export default compose(
-//   connect(mapStateToProps, { setHighestScore }),
-//   firestoreConnect([
-//     {
-//       collection: 'projects',
-//       orderBy: ['createdAt', 'desc'],
-//     },
-//     { collection: 'notifications', limit: 6, orderBy: ['time', 'desc'] },
-//   ])
-// )(Dashboard);

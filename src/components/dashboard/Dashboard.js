@@ -7,7 +7,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { setHighestScore } from '../../store/actions/userAction';
 
 function Dashboard({ projects, auth, notifications, users, setHighestScore }) {
-  var highestNum = 0;
+  var highestNum = 1;
   useEffect(() => {
     setHighestScore(highestNum);
   });

@@ -23,7 +23,7 @@ const store = createStore(
     reduxFirestore(firebase, fbConfig)
 
     // remove in production
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    //  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 

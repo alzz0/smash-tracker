@@ -102,13 +102,6 @@ function ProjectDetails(props) {
 
             {auth.uid === project.authorId && (
               <div>
-                {' '}
-                <button
-                  className='waves-effect waves-light btn'
-                  onClick={() => deleteAndRedirect()}
-                >
-                  Delete
-                </button>
                 <button
                   className='waves-effect waves-light btn'
                   onClick={() => {
@@ -116,6 +109,13 @@ function ProjectDetails(props) {
                   }}
                 >
                   Edit
+                </button>
+                <button
+                  style={{ float: 'right' }}
+                  className='waves-effect waves-light btn'
+                  onClick={() => deleteAndRedirect()}
+                >
+                  Delete
                 </button>
               </div>
             )}

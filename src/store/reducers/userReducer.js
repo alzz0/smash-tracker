@@ -1,5 +1,5 @@
 const initState = {
-  score: 0,
+  score: 1,
 };
 
 export default function (state = initState, action) {

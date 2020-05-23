@@ -1,0 +1,15 @@
+.custom-card {
+  line-height: normal !important ;
+  font-weight: 500 !important;
+}
+.gold {
+  color: gold;
+}
+
+.silver {
+  color: #aaa9ad;
+}
+
+.bronze {
+  color: #b08d57;
+}
