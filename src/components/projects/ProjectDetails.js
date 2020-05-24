@@ -2,20 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import moment from 'moment';
 import {
   deletePost,
   updateProjectContent,
 } from '../../store/actions/projectActions';
-import moment from 'moment';
+import { addComment } from '../../store/actions/commentActions';
+
 function ProjectDetails(props) {
   const [edit, setEdit] = useState(false);
-  const { project, deletePost, history, updateProjectContent, auth } = props;
+  const [comment, setComment] = useState({ comment: '', user: {} });
+  const [commentTimmer, setCommentTimer] = useState(false);
+  const {
+    project,
+    deletePost,
+    history,
+    updateProjectContent,
+    auth,
+    addComment,
+    user,
+  } = props;
   const id = props.match.params.id;
   const [updateProject, setUpdateProject] = useState({
     title: '',
     content: '',
   });
 
+  function commentTimeOut() {
+    setCommentTimer(true);
+    setTimeout(() => {
+      setCommentTimer(false);
+    }, 6000);
+  }
   function deleteAndRedirect() {
     deletePost(id);
     history.push('/');
@@ -37,6 +55,37 @@ function ProjectDetails(props) {
     setUpdateProject({
       title: project.title,
       content: project.content,
+    });
+  }
+  function handleCommentSubmit(e) {
+    e.preventDefault();
+    if (auth.uid && commentTimmer === false) {
+      addComment(comment, id);
+      setComment({ comment: '' });
+      commentTimeOut();
+    }
+  }
+  function handleCommentChange(e) {
+    setComment({ [e.target.name]: e.target.value, user });
+    console.log('change');
+  }
+
+  if (project && project.comment) {
+    var comments = project.comment.map((com, index) => {
+      return (
+        <div
+          key={index}
+          style={{ lineHeight: '5px', height: 'auto', minHeight: '60px' }}
+        >
+          <h6 style={{ fontSize: '15px' }}>
+            <strong>
+              {com.comment.user.firstName} {com.comment.user.lastName}
+            </strong>{' '}
+            {moment(com.createdAt.toDate()).calendar()}
+          </h6>
+          <p style={{ fontSize: '16px' }}>{com.comment.comment}</p>
+        </div>
+      );
     });
   }
   if (project) {
@@ -126,6 +175,31 @@ function ProjectDetails(props) {
           >
             Back
           </button>
+          <h2> Comments</h2>
+          <form onSubmit={e => handleCommentSubmit(e)}>
+            <div className='input-field'>
+              <label htmlFor='comment'>
+                {commentTimmer === false
+                  ? 'Comment'
+                  : 'Wait a moment before commenting again'}
+              </label>
+              <input
+                type='text'
+                name='comment'
+                value={comment.comment}
+                onChange={e => handleCommentChange(e)}
+              />
+            </div>
+            {!auth.isEmpty && (
+              <input
+                required
+                type='submit'
+                value='Comment'
+                className='waves-effect waves-light btn'
+              />
+            )}
+          </form>
+          <div>{comments && comments.reverse()}</div>
         </div>
       );
     }
@@ -139,21 +213,29 @@ function ProjectDetails(props) {
 }
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
-  const projects = state.firestore.data.projects;
+  const userId = state.firebase.auth.uid;
 
+  const projects = state.firestore.data.projects;
+  const users = state.firestore.data.users;
   const project = projects ? projects[id] : null;
+  const user = users ? users[userId] : null;
 
   return {
+    auth: state.firebase.auth,
     project: project,
     reduxProject: state.project,
-    auth: state.firebase.auth,
+
+    user,
   };
 };
 export default compose(
-  connect(mapStateToProps, { deletePost, updateProjectContent }),
+  connect(mapStateToProps, { deletePost, updateProjectContent, addComment }),
   firestoreConnect([
     {
       collection: 'projects',
+    },
+    {
+      collection: 'users',
     },
   ])
 )(ProjectDetails);

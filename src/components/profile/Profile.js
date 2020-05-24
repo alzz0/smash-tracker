@@ -92,12 +92,6 @@ function Profile({ user, createbio, auth, history }) {
           </span>
 
           <span className='card-title'></span>
-          {/* <p>
-          {project.authorFirstName} {project.authorLastName}
-        </p>
-        <p className='grey-text'>
-          {moment(project.createdAt.toDate()).calendar()}
-        </p> */}
         </div>
       </div>
       <button
