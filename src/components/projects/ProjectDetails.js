@@ -60,9 +60,11 @@ function ProjectDetails(props) {
   function handleCommentSubmit(e) {
     e.preventDefault();
     if (auth.uid && commentTimmer === false) {
-      addComment(comment, id);
-      setComment({ comment: '' });
-      commentTimeOut();
+      if (comment.comment.length) {
+        addComment(comment, id);
+        setComment({ comment: '' });
+        commentTimeOut();
+      }
     }
   }
   function handleCommentChange(e) {
@@ -193,6 +195,7 @@ function ProjectDetails(props) {
             {!auth.isEmpty && (
               <input
                 required
+                disabled={comment.comment.length ? false : true}
                 type='submit'
                 value='Comment'
                 className='waves-effect waves-light btn'
