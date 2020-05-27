@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-import star from '../../images/star.png';
+
 import './users.css';
 import { superUsers } from '../../constants';
-
+import { calcScore } from '../../store/actions/calcScore';
 import {
   incrementPoint,
   decrementPoint,
@@ -19,6 +19,7 @@ function Users({
   incrementPoint,
   decrementPoint,
   auth,
+  calcScore,
 }) {
   const newObj = users && Object.entries(users);
   const [points, setPoints] = useState(0);
@@ -64,6 +65,13 @@ function Users({
   //   }
   // }
 
+  function endGame(e) {
+    e.preventDefault();
+    let result = window.confirm('Are you sure?');
+    if (result) {
+      calcScore(users);
+    }
+  }
   let data =
     newObj &&
     newObj.reverse().map((user, index) => {
@@ -163,6 +171,16 @@ function Users({
   return (
     <div className='dashboard-container'>
       <div className='row'>{data}</div>
+      <span style={{ margin: '40px' }}>
+        <button
+          disabled={superUsers.includes(auth.uid) ? false : true}
+          type='submit'
+          className='waves-effect waves-light btn-large'
+          onClick={e => endGame(e)}
+        >
+          End Game
+        </button>
+      </span>
     </div>
   );
 }
@@ -172,6 +190,7 @@ const mapDispatchToprops = dispatch => {
     incrementPoint: points => dispatch(incrementPoint(points)),
     decrementPoint: points => dispatch(decrementPoint(points)),
     setHighestScore: highestNum => dispatch(setHighestScore(highestNum)),
+    calcScore: scores => dispatch(calcScore(scores)),
   };
 };
 const mapStateToProps = state => {

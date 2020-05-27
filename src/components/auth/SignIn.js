@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../store/actions/authActions.js';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 function SignIn({ signIn, authError, auth }) {
   const [user, setUser] = useState({ email: '', password: '' });
   if (auth.uid) return <Redirect to='/' />;
@@ -34,6 +34,7 @@ function SignIn({ signIn, authError, auth }) {
             {authError ? <p>{authError}</p> : null}
           </div>
         </div>
+        <Link to='/signup'>Dont have an account? Sign up here.</Link>
       </form>
     </div>
   );

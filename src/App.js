@@ -11,6 +11,7 @@ import SignUp from './components/auth/SignUp.js';
 import CreateProject from './components/projects/CreateProject.js';
 import Profile from './components/profile/Profile.js';
 import Users from './components/users/Users.js';
+import Scoreboard from './components/scoreboard/Scoreboard';
 import { setHighestScore } from './store/actions/userAction';
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/create' component={CreateProject} />
           <Route path='/profile/:id' component={Profile} />
           <Route path='/users' component={Users} />
+          <Route path='/scoreboard' component={Scoreboard} />
         </Switch>
       </div>
     </BrowserRouter>

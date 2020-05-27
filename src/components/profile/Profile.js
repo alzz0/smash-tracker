@@ -5,7 +5,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { createbio } from '../../store/actions/userAction';
-function Profile({ user, createbio, auth, history }) {
+import { signOut } from '../../store/actions/authActions';
+function Profile({ user, createbio, auth, history, signOut }) {
   const [bio, setBio] = useState({ bio: '' });
   const [edit, setEdit] = useState(false);
 
@@ -100,6 +101,10 @@ function Profile({ user, createbio, auth, history }) {
       >
         Back
       </button>
+
+      <a className=' waves-effect waves-light btn' onClick={signOut}>
+        Log Out
+      </a>
     </div>
   );
 }
@@ -116,7 +121,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 export default compose(
-  connect(mapStateToProps, { createbio }),
+  connect(mapStateToProps, { createbio, signOut }),
   firestoreConnect([
     {
       collection: 'users',
