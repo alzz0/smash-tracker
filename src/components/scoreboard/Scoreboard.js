@@ -41,6 +41,7 @@ function Scoreboard({ scoreboard }) {
   return (
     <Fragment>
       <select
+        style={{ maxWidth: '100%', fontSize: '16px' }}
         className='browser-default'
         onChange={e => handleFilter(e.target.value)}
       >

@@ -6,7 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { createbio } from '../../store/actions/userAction';
 import { signOut } from '../../store/actions/authActions';
-function Profile({ user, createbio, auth, history, signOut }) {
+function Profile({ user, createbio, auth, history, signOut, match }) {
   const [bio, setBio] = useState({ bio: '' });
   const [edit, setEdit] = useState(false);
 
@@ -102,9 +102,11 @@ function Profile({ user, createbio, auth, history, signOut }) {
         Back
       </button>
 
-      <a className=' waves-effect waves-light btn' onClick={signOut}>
-        Log Out
-      </a>
+      {match.params.id === auth.uid && (
+        <a className=' waves-effect waves-light btn' onClick={signOut}>
+          Log Out
+        </a>
+      )}
     </div>
   );
 }
