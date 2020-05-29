@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import moment from 'moment';
 import {
@@ -81,7 +82,12 @@ function ProjectDetails(props) {
         >
           <h6 style={{ fontSize: '15px' }}>
             <strong>
-              {com.comment.user.firstName} {com.comment.user.lastName}
+              <Link
+                style={{ color: 'black' }}
+                to={`/profile/${com.comment.user.id}`}
+              >
+                {com.comment.user.firstName} {com.comment.user.lastName}
+              </Link>
             </strong>{' '}
             {moment(com.createdAt.toDate()).calendar()}
           </h6>
