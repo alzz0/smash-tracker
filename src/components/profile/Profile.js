@@ -62,7 +62,7 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
                 type='text'
                 onChange={handleChange}
                 name={'bio'}
-                placeholder={user.bio}
+                placeholder={user.bio || ' Update Bio'}
               />
               <div className='input-field' style={{ display: 'inline' }}>
                 <button

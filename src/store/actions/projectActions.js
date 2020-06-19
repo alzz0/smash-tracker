@@ -43,7 +43,10 @@ export const dislikePost = postId => {
 export const likePost = postId => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
-
+    const firestore = getFirestore();
+    console.log(
+      firestore.collection('users').doc('4I3uavpblzg4DCbhK3NBRFwb5nX2')
+    );
     const db = firebase.firestore();
 
     const increment = firebase.firestore.FieldValue.increment(1);

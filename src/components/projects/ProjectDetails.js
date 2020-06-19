@@ -76,10 +76,7 @@ function ProjectDetails(props) {
   if (project && project.comment) {
     var comments = project.comment.map((com, index) => {
       return (
-        <div
-          key={index}
-          style={{ lineHeight: '5px', height: 'auto', minHeight: '60px' }}
-        >
+        <div key={index} style={{ height: 'auto', minHeight: '60px' }}>
           <h6 style={{ fontSize: '15px' }}>
             <strong>
               <Link
@@ -91,7 +88,9 @@ function ProjectDetails(props) {
             </strong>{' '}
             {moment(com.createdAt.toDate()).calendar()}
           </h6>
-          <p style={{ fontSize: '16px' }}>{com.comment.comment}</p>
+          <p style={{ marginTop: '0', fontSize: '16px' }}>
+            {com.comment.comment}
+          </p>
         </div>
       );
     });
