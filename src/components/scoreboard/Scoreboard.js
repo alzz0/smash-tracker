@@ -7,8 +7,51 @@ function Scoreboard({ scoreboard }) {
   const [stateData, setStateData] = useState();
   var fullData = [];
   let days = [];
+  var points = [];
   useEffect(() => {
     handleFilter();
+
+    // REVISIT TO CALCULATE TOTAL SCORES PER USER
+    // if (scoreboard) {
+    //   for (var key in scoreboard) {
+    //     var data = scoreboard[key].scores;
+
+    //     data.forEach(function (item) {
+    //       Object.keys(item).forEach(function (key) {
+    //         console.log(item.id, item.points);
+    //         //console.log('key:' + key + 'value:' + item[key]);
+    //       });
+    //     });
+    //     var value = scoreboard.map(function (score, x) {
+    //       console.log(score);
+    //       var val = score.scores;
+    //       val.map(score => {
+    //         data.map(d => {
+    //           if (d.id === 'yxHKf6gbiMVJCyW5PqLTUEDiYu23') {
+    //             points.push(d.points);
+    //             //console.log(points[0]);
+    //             console.log(d.points);
+
+    //             // console.log(score.firstName, score.points + d.points);
+    //             // console.log(
+    //             //   [score.points, d.points].reduce((a, b) => a + b, 0)
+    //             // );
+    //           }
+    //         });
+
+    //         return score;
+    //       });
+    //     });
+    //   }
+    //   var unique = points.filter(function (elem, index, self) {
+    //     return index === self.indexOf(elem);
+    //   });
+    //   console.log(unique);
+    //   // let newPoints = new Set(points);
+    //   // console.log(newPoints);
+    //   var sum = unique.reduce((a, b) => a + b);
+    //   console.log(sum);
+    // }
   }, [scoreboard]);
   var initData =
     scoreboard &&

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-
+import { SearchBox } from '../../utils/SearchBox';
 import './users.css';
 import { superUsers } from '../../constants';
 import { calcScore } from '../../store/actions/calcScore';
@@ -22,7 +22,9 @@ function Users({
   calcScore,
 }) {
   const newObj = users && Object.entries(users);
+
   const [points, setPoints] = useState(0);
+  const [searchUser, setSearchUser] = useState('');
 
   // var highestNum = undefined;
   // var secondHighest = undefined;
@@ -72,9 +74,19 @@ function Users({
       calcScore(users);
     }
   }
-  let data =
+  function handleInput(e) {
+    e.preventDefault();
+    setSearchUser(e.target.value);
+  }
+
+  let filteredUsers =
     newObj &&
-    newObj.reverse().map((user, index) => {
+    newObj.filter(user => {
+      return user[1].firstName.toLowerCase().includes(searchUser.toLowerCase());
+    });
+  let data =
+    filteredUsers &&
+    filteredUsers.reverse().map((user, index) => {
       return (
         <div className='col s12 m6' key={user[1].id}>
           <Link key={user[1].id} to={`/profile/${user[1].id}`}>
@@ -170,6 +182,7 @@ function Users({
 
   return (
     <div className='dashboard-container'>
+      <SearchBox handleInput={handleInput} />
       <div className='row'>{data}</div>
       <span style={{ margin: '40px' }}>
         <button
