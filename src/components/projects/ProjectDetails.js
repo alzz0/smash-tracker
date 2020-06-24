@@ -36,8 +36,13 @@ function ProjectDetails(props) {
     }, 6000);
   }
   function deleteAndRedirect() {
-    deletePost(id);
-    history.push('/');
+    let confirmDelete = window.confirm(
+      'Are you sure you want to delete this masterpiece ?'
+    );
+    if (confirmDelete) {
+      deletePost(id);
+      history.push('/');
+    }
   }
 
   function handleChange(e) {
@@ -120,6 +125,7 @@ function ProjectDetails(props) {
                 Project Content
               </label>
               <textarea
+                style={{ height: 'auto' }}
                 required
                 value={updateProject.content}
                 onChange={handleChange}

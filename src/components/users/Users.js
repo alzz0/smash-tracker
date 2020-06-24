@@ -69,10 +69,15 @@ function Users({
 
   function endGame(e) {
     e.preventDefault();
-    let result = window.confirm('Are you sure?');
-    if (result) {
-      calcScore(users);
-    }
+
+    users.map(user => {
+      if (user.points > 0) {
+        let result = window.confirm('Are you sure?');
+        if (result) {
+          calcScore(users);
+        }
+      }
+    });
   }
   function handleInput(e) {
     e.preventDefault();
@@ -84,6 +89,7 @@ function Users({
     newObj.filter(user => {
       return user[1].firstName.toLowerCase().includes(searchUser.toLowerCase());
     });
+
   let data =
     filteredUsers &&
     filteredUsers.reverse().map((user, index) => {
@@ -165,7 +171,10 @@ function Users({
           <button
             className='btn-floating btn-large waves-effect waves-light red'
             onClick={() => decrementPoint(user[1].id)}
-            disabled={superUsers.includes(auth.uid) ? false : true}
+            // disabled={superUsers.includes(auth.uid) ? false : true}
+            disabled={
+              superUsers.includes(auth.uid) && user[1].points > 0 ? false : true
+            }
           >
             <i className=' material-icons'>exposure_neg_1</i>
           </button>
