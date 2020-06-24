@@ -46,6 +46,7 @@ export const signUp = newUser => {
             id: res.user.uid,
             points: 0,
             bio: '',
+            createdAt: new Date(),
           });
       })
       .then(() => {

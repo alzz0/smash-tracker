@@ -10,8 +10,8 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
   const [bio, setBio] = useState({ bio: '' });
   const [edit, setEdit] = useState(false);
 
-  if (auth.createdAt) {
-    var date = auth.createdAt;
+  if (user) {
+    var date = user.createdAt.seconds * 1000;
 
     var day = new Date(parseInt(date, 10));
     var dayString = day.toString('MM/dd/yy HH:mm:ss');
