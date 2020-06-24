@@ -33,12 +33,13 @@ function ProjectSummary({ project, dislikePost, likePost, auth }) {
       <div className='card-content grey-text text-darken-3'>
         <span className='card-title'>{project.title}</span>
         <p>
-          {project.authorFirstName} {project.authorLastName}
+          {project.authorFirstName} {project.authorLastName}{' '}
         </p>
         <p className='grey-text'>
           {moment(project.createdAt.toDate()).calendar()}
         </p>
       </div>
+      <p style={{ marginLeft: '7px' }}> {project.comment.length} Comments</p>
     </div>
   );
 }
