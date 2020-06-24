@@ -28,6 +28,9 @@ function ProjectDetails(props) {
     title: '',
     content: '',
   });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   function commentTimeOut() {
     setCommentTimer(true);
@@ -75,7 +78,6 @@ function ProjectDetails(props) {
   }
   function handleCommentChange(e) {
     setComment({ [e.target.name]: e.target.value, user });
-    console.log('change');
   }
 
   if (project && project.comment) {
@@ -116,6 +118,7 @@ function ProjectDetails(props) {
                 onChange={handleChange}
                 type='text'
                 id='title'
+                maxLength='100'
                 value={updateProject.title}
               />
             </div>

@@ -28,6 +28,7 @@ function CreateProject({ createProject, auth, history }) {
             onChange={handleChange}
             type='text'
             id='title'
+            maxLength='100'
             value={project.title}
           />
         </div>

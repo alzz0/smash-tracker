@@ -62,6 +62,7 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
                 type='text'
                 onChange={handleChange}
                 name={'bio'}
+                maxLength='100'
                 placeholder={user.bio || ' Update Bio'}
               />
               <div className='input-field' style={{ display: 'inline' }}>

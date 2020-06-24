@@ -1,6 +1,5 @@
 export const addComment = (comment, id) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    console.log(comment);
     const firebase = getFirebase();
     const firestore = getFirestore();
     const profile = getState().firebase.profile;
