@@ -14,7 +14,7 @@ function ProjectSummary({ project, dislikePost, likePost, auth }) {
     e.preventDefault();
     e.stopPropagation();
     if (auth.uid) {
-      likePost(project.id);
+      likePost(project.id, auth);
     }
   }
   return (
@@ -39,7 +39,10 @@ function ProjectSummary({ project, dislikePost, likePost, auth }) {
           {moment(project.createdAt.toDate()).calendar()}
         </p>
       </div>
-      <p style={{ marginLeft: '7px' }}> {project.comment.length} Comments</p>
+      <p style={{ marginLeft: '7px' }}>
+        {' '}
+        {project.comment && ` ${project.comment.length} Comments`}
+      </p>
     </div>
   );
 }
