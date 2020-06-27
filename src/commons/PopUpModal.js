@@ -14,7 +14,11 @@ function PopUpModal({ names, ...props }) {
     setPopupActive(!popupActive);
   }
   modal.push(
-    <div className='likes-modal' style={popupActive ? display : hide}>
+    <div
+      key={names}
+      className='likes-modal'
+      style={popupActive ? display : hide}
+    >
       <div className='modal-footer'>
         <span
           className='btn-flat'

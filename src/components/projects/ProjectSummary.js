@@ -47,27 +47,32 @@ function ProjectSummary({
   }, [project]);
 
   function dislike(e) {
-    if (projectLikedBy.includes(auth.uid) && auth.uid) {
-      removeLikePost(project.id, user);
-    }
     e.preventDefault();
     e.stopPropagation();
-    if (projectDislikedBy.includes(auth.uid) && auth.uid) {
-      removeDislikePost(project.id, user);
-    } else {
-      dislikePost(project.id, user);
+    if (auth.uid) {
+      if (projectLikedBy.includes(auth.uid)) {
+        removeLikePost(project.id, user);
+      }
+
+      if (projectDislikedBy.includes(auth.uid) && auth.uid) {
+        removeDislikePost(project.id, user);
+      } else {
+        dislikePost(project.id, user);
+      }
     }
   }
   function like(e) {
     e.preventDefault();
     e.stopPropagation();
-    if (projectDislikedBy.includes(auth.uid) && auth.uid) {
-      removeDislikePost(project.id, user);
-    }
-    if (projectLikedBy.includes(auth.uid) && auth.uid) {
-      removeLikePost(project.id, user);
-    } else {
-      likePost(project.id, user);
+    if (auth.uid) {
+      if (projectDislikedBy.includes(auth.uid)) {
+        removeDislikePost(project.id, user);
+      }
+      if (projectLikedBy.includes(auth.uid) && auth.uid) {
+        removeLikePost(project.id, user);
+      } else {
+        likePost(project.id, user);
+      }
     }
   }
   if (projectLikeName && projectLikeName.length > 1) {
