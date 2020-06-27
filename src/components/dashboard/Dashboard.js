@@ -43,6 +43,7 @@ function Dashboard({ projects, auth, notifications, users, setHighestScore }) {
           />
         </div>
       </div>
+      v1.0.1
     </div>
   );
 }
