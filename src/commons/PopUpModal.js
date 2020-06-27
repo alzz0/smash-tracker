@@ -16,7 +16,11 @@ function PopUpModal({ names, ...props }) {
   modal.push(
     <div className='likes-modal' style={popupActive ? display : hide}>
       <div className='modal-footer'>
-        <span className='btn-flat' style={{ color: '#fff' }} onClick={toggle}>
+        <span
+          className='btn-flat'
+          style={{ color: '#fff', paddingLeft: 0, fontWeight: 'bold' }}
+          onClick={toggle}
+        >
           close
         </span>
       </div>
@@ -33,9 +37,10 @@ function PopUpModal({ names, ...props }) {
   );
   return (
     <div onClick={e => toggle(e)}>
-      {`${props.dislike ? ' Disliked' : 'Liked '} by ${names[0]} and ${
-        names.length - 1
-      }  ${names.length > 2 ? 'others' : 'other'}`}
+      {!popupActive &&
+        `${props.dislike ? ' Disliked' : 'Liked '} by ${names[0]} and ${
+          names.length - 1
+        }  ${names.length > 2 ? 'others' : 'other'}`}
       {modal}
     </div>
   );
