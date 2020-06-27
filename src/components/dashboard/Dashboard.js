@@ -43,7 +43,7 @@ function Dashboard({ projects, auth, notifications, users, setHighestScore }) {
           />
         </div>
       </div>
-      v1.0.1
+      <p style={{ opacity: '0.1' }}>v1.0.1</p>
     </div>
   );
 }

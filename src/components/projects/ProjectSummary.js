@@ -93,25 +93,41 @@ function ProjectSummary({
           bottom: '0',
         }}
       >
-        <span
-          onClick={e => like(e)}
-          style={{ position: 'absolute', right: '40px', bottom: '56px' }}
-        >
-          <i className='material-icons'>thumb_up</i>
-          {project.likes}
-        </span>
-        <span
-          style={{
-            marginLeft: '10px',
-            position: 'absolute',
-            right: '0',
-            bottom: '56px',
-          }}
-          onClick={e => dislike(e)}
-        >
-          <i className='material-icons'>thumb_down</i>
-          {project.dislikes}
-        </span>
+        {projectLikedBy && (
+          <span
+            className={
+              projectLikedBy.includes(auth.uid)
+                ? 'like-dislike-active'
+                : 'like-dislike'
+            }
+            onClick={e => like(e)}
+            style={{ position: 'absolute', right: '40px', bottom: '56px' }}
+          >
+            <i className='material-icons'>thumb_up</i>
+
+            {project.likes}
+          </span>
+        )}
+        {projectDislikedBy && (
+          <span
+            className={
+              projectDislikedBy.includes(auth.uid)
+                ? 'like-dislike-active'
+                : 'like-dislike'
+            }
+            style={{
+              marginLeft: '10px',
+              position: 'absolute',
+              right: '0',
+              bottom: '56px',
+            }}
+            onClick={e => dislike(e)}
+          >
+            <i className='material-icons'>thumb_down</i>
+
+            {project.dislikes}
+          </span>
+        )}
         <div
           onClick={e => {
             e.preventDefault();

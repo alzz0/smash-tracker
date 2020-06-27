@@ -60,3 +60,12 @@ span {
 
   margin: auto;
 }
+
+.like-dislike-active {
+  /* add here css  when nessessary */
+}
+
+.like-dislike {
+  opacity: 0.4;
+  color: gray;
+}
