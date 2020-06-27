@@ -118,16 +118,9 @@ function ProjectSummary({
             e.stopPropagation();
           }}
         >
-          {' '}
-          {''}
-          <span>
-            {likedNames}
-            {''}{' '}
-          </span>{' '}
-          <span style={{ color: 'red', float: 'right' }}>
-            {''} {dislikedNamed}
-            {''}
-          </span>
+          <span>{likedNames}</span>
+
+          <span style={{ color: 'red' }}>{dislikedNamed}</span>
         </div>
       </div>
 
@@ -139,6 +132,7 @@ function ProjectSummary({
         <p className='grey-text'>
           {moment(project.createdAt.toDate()).calendar()}
         </p>
+        {project.comment && ` ${project.comment.length} Comments`}
       </div>
       <p
         style={{
@@ -148,7 +142,6 @@ function ProjectSummary({
         }}
       >
         {' '}
-        {project.comment && ` ${project.comment.length} Comments`}
       </p>
     </div>
   );
