@@ -27,7 +27,7 @@ export const createProject = project => {
   };
 };
 
-export const dislikePost = postId => {
+export const dislikePost = (postId, auth) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
 
@@ -35,23 +35,59 @@ export const dislikePost = postId => {
 
     const increment = firebase.firestore.FieldValue.increment(1);
     const storyRef = db.collection('projects').doc(postId);
-
+    storyRef.update({
+      dislikedBy: firebase.firestore.FieldValue.arrayUnion({ auth }),
+    });
     storyRef.update({ dislikes: increment });
   };
 };
 
-export const likePost = postId => {
+export const removeDislikePost = (postId, auth) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+
+    const db = firebase.firestore();
+
+    const decrement = firebase.firestore.FieldValue.increment(-1);
+    const storyRef = db.collection('projects').doc(postId);
+
+    storyRef.update({
+      dislikedBy: firebase.firestore.FieldValue.arrayRemove({ auth }),
+    });
+
+    storyRef.update({ dislikes: decrement });
+  };
+};
+
+export const removeLikePost = (postId, auth) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+
+    const db = firebase.firestore();
+
+    const decrement = firebase.firestore.FieldValue.increment(-1);
+    const storyRef = db.collection('projects').doc(postId);
+
+    storyRef.update({
+      likedBy: firebase.firestore.FieldValue.arrayRemove({ auth }),
+    });
+
+    storyRef.update({ likes: decrement });
+  };
+};
+
+export const likePost = (postId, auth) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
-    console.log(
-      firestore.collection('users').doc('4I3uavpblzg4DCbhK3NBRFwb5nX2')
-    );
+
     const db = firebase.firestore();
 
     const increment = firebase.firestore.FieldValue.increment(1);
     const storyRef = db.collection('projects').doc(postId);
-
+    storyRef.update({
+      likedBy: firebase.firestore.FieldValue.arrayUnion({ auth }),
+    });
     storyRef.update({ likes: increment });
   };
 };

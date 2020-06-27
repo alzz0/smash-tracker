@@ -49,3 +49,15 @@ p,
 span {
   word-wrap: break-word;
 }
+
+.likes-modal {
+  top: 107px;
+  background-color: black;
+  color: #fff;
+  padding: 10px;
+  opacity: 0.9;
+  height: auto;
+
+  margin: auto;
+  width: 50%;
+}
