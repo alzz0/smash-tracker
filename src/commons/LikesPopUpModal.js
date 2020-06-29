@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-function PopUpModal({ ...props }) {
+function LikesPopUpModal({ names, ...props }) {
   const [popupActive, setPopupActive] = useState(false);
   var modal = [];
   const display = {
@@ -14,7 +14,11 @@ function PopUpModal({ ...props }) {
     setPopupActive(!popupActive);
   }
   modal.push(
-    <div className='modal-popup' style={popupActive ? display : hide}>
+    <div
+      key={names}
+      className='likes-modal'
+      style={popupActive ? display : hide}
+    >
       <div className='modal-footer'>
         <span
           className='btn-flat'
@@ -25,14 +29,27 @@ function PopUpModal({ ...props }) {
         </span>
       </div>
       <div className='modal-content'>
-        <p>{...props.content || 'no content yet'} </p>
+        {names.map((name, index) => {
+          return (
+            <li key={index} style={{ listStyle: 'none' }}>
+              {name}
+            </li>
+          );
+        })}
       </div>
     </div>
   );
   return (
-    <div className='popup-modal-likes' onClick={e => toggle(e)}>
+    <div
+      className={`popup-modal-likes ${popupActive ? '' : 'likes-hover'}`}
+      onClick={e => toggle(e)}
+    >
+      {!popupActive &&
+        `${props.dislike ? ' Disliked' : 'Liked '} by ${names[0]} and ${
+          names.length - 1
+        }  ${names.length > 2 ? 'others' : 'other'}`}
       {modal}
     </div>
   );
 }
-export default PopUpModal;
+export default LikesPopUpModal;

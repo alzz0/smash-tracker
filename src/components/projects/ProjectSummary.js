@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import PopUpModal from '../../commons/PopUpModal';
+import LikesPopUpModal from '../../commons/LikesPopUpModal';
+
 import { connect } from 'react-redux';
 import {
   dislikePost,
@@ -76,14 +77,14 @@ function ProjectSummary({
     }
   }
   if (projectLikeName && projectLikeName.length > 1) {
-    var likedNames = <PopUpModal names={projectLikeName} />;
+    var likedNames = <LikesPopUpModal names={projectLikeName} />;
   } else {
     var likedNames =
       projectLikeName != false && ` Liked by ${projectLikeName}    `;
   }
 
   if (projectdislikeName && projectdislikeName.length > 1) {
-    var dislikedNamed = <PopUpModal dislike names={projectdislikeName} />;
+    var dislikedNamed = <LikesPopUpModal dislike names={projectdislikeName} />;
   } else {
     var dislikedNamed =
       projectdislikeName != false && `  Disliked by ${projectdislikeName}`;
@@ -108,7 +109,15 @@ function ProjectSummary({
             onClick={e => like(e)}
             style={{ position: 'absolute', right: '40px', bottom: '56px' }}
           >
-            <i className='material-icons'>thumb_up</i>
+            <i
+              onClick={() =>
+                !auth.uid && alert('Sign in to make your opinion count ')
+              }
+              title={auth.uid ? '' : 'Sign in to make your opinion count'}
+              className='material-icons thumb-icon'
+            >
+              thumb_up
+            </i>
 
             {project.likes}
           </span>
@@ -128,7 +137,15 @@ function ProjectSummary({
             }}
             onClick={e => dislike(e)}
           >
-            <i className='material-icons'>thumb_down</i>
+            <i
+              onClick={() =>
+                !auth.uid && alert('Sign in to make your opinion count ')
+              }
+              title={auth.uid ? '' : 'Sign in to make your opinion count'}
+              className='material-icons thumb-icon'
+            >
+              thumb_down
+            </i>
 
             {project.dislikes}
           </span>
@@ -141,7 +158,7 @@ function ProjectSummary({
         >
           <span>{likedNames}</span>
 
-          <span style={{ color: 'red' }}>{dislikedNamed}</span>
+          <span style={{ color: '#e91e63 ' }}>{dislikedNamed}</span>
         </div>
       </div>
 
