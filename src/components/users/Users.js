@@ -69,15 +69,15 @@ function Users({
 
   function endGame(e) {
     e.preventDefault();
-
-    users.map(user => {
-      if (user.points > 0) {
-        let result = window.confirm('Are you sure?');
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].points > 0) {
+        var result = window.confirm('Are you sure?');
         if (result) {
           calcScore(users);
         }
+        break;
       }
-    });
+    }
   }
   function handleInput(e) {
     e.preventDefault();
