@@ -43,7 +43,8 @@ function Dashboard({ projects, auth, notifications, users, setHighestScore }) {
           />
         </div>
       </div>
-      <p style={{ opacity: '0.1' }}>v1.0.1</p>
+      {/* version number */}
+      <p style={{ opacity: '0.1' }}>v1.0.2</p>
     </div>
   );
 }
