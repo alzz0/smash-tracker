@@ -25,6 +25,7 @@ function Users({
 
   const [points, setPoints] = useState(0);
   const [searchUser, setSearchUser] = useState('');
+  const [checked, setChecked] = useState(false);
 
   // var highestNum = undefined;
   // var secondHighest = undefined;
@@ -69,7 +70,13 @@ function Users({
 
   function endGame(e) {
     e.preventDefault();
+
     for (let i = 0; i < users.length; i++) {
+      //let playedUsers = [];
+      // if (users[i].points > 0) {
+      //   console.log(users[i]);
+      //   playedUsers.push(users[i]);
+      // }
       if (users[i].points > 0) {
         var result = window.confirm('Are you sure?');
         if (result) {
@@ -84,6 +91,19 @@ function Users({
     setSearchUser(e.target.value);
   }
 
+  function fighterPlaying(e) {
+    e.preventDefault();
+    //e.stopPropagation();
+    //handleSwitchChange(e);
+  }
+
+  function handleSwitchChange(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setChecked(!checked);
+    //setChecked({ ...checked, [e.target.id]: !e.target.value });
+  }
   let filteredUsers =
     newObj &&
     newObj.filter(user => {
@@ -95,6 +115,13 @@ function Users({
     filteredUsers.reverse().map((user, index) => {
       return (
         <div className='col s12 m6' key={user[1].id}>
+          {/* <input
+            type='checkbox'
+            onChange={handleSwitchChange}
+            value={checked}
+            name={'user[1].id'}
+            checked={checked}
+          /> */}
           <Link key={user[1].id} to={`/profile/${user[1].id}`}>
             <div className='card z-depth-0 project-summary'>
               {index === 0 ? (

@@ -23,6 +23,25 @@ export const decrementPoint = userId => {
     storyRef.update({ points: decrement });
   };
 };
+export const setScoreSum = () => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    let scoreIds = ['5ISbQ0MaoKw9xaNhRDhg', 'Sm8M4QIHNWIcOIXTZ5eH'];
+    let totals = [];
+    const firebase = getFirebase();
+    const db = firebase.firestore();
+    for (let i = 0; i < scoreIds.length; i++) {
+      db.collection('scoreboard')
+        .doc(scoreIds[i])
+
+        .get()
+        .then(QuerySnapshot => {
+          console.log(scoreIds[i]);
+          let results = QuerySnapshot.get('scores');
+          console.log(results.id);
+        });
+    }
+  };
+};
 
 export const setHighestScore = score => (dispatch, getState) => {
   dispatch({

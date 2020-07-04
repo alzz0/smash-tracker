@@ -6,19 +6,30 @@ export const calcScore = scores => {
 
     firestore
       .collection('scoreboard')
-      .add({
-        scores,
-        createdAt: new Date(),
-      })
+      .get()
+      // .add({
+      //   scores,
+      //   createdAt: new Date(),
+      // })
       .then(() => {
         // clear all points after end of night
         db.collection('users')
           .get()
           .then(snapShot => {
+            // write code here to update total
+
             snapShot.docs.forEach(doc => {
-              doc.ref.update({
-                points: 0,
-              });
+              let points = doc.get('points');
+              let prevSumPoints = doc.get('sumPoints');
+              let totalGamesPlayed = doc.get('gamesPlayed');
+
+              if (points > 0) {
+                doc.ref.update({
+                  sumPoints: prevSumPoints + points,
+                  gamesPlayed: totalGamesPlayed + 1,
+                  points: 0,
+                });
+              }
             });
           });
       });

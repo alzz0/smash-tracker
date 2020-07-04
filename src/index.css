@@ -89,3 +89,8 @@ span {
   opacity: 0.8;
   color: #039be5;
 }
+
+input[type='checkbox'] {
+  opacity: 1 !important;
+  z-index: 9999999999999;
+}

@@ -4,10 +4,20 @@ import ProjectList from '../projects/ProjectList.js';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { setHighestScore } from '../../store/actions/userAction';
+import { setHighestScore, setScoreSum } from '../../store/actions/userAction';
 
-function Dashboard({ projects, auth, notifications, users, setHighestScore }) {
+function Dashboard({
+  projects,
+  auth,
+  notifications,
+  users,
+  setHighestScore,
+  setScoreSum,
+}) {
   var highestNum = 1;
+  useEffect(() => {
+    setScoreSum();
+  }, []);
   useEffect(() => {
     setHighestScore(highestNum);
   });
@@ -58,7 +68,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  connect(mapStateToProps, { setHighestScore }),
+  connect(mapStateToProps, { setHighestScore, setScoreSum }),
   firestoreConnect([
     {
       collection: 'projects',
