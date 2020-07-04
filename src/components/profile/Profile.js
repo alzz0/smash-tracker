@@ -36,7 +36,9 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
           </h3>
           <h4>Score: {user && user.sumPoints}</h4>
           <h4>Games Played: {user && user.gamesPlayed}</h4>
-          <h4>Score Average: {user && user.sumPoints / user.gamesPlayed}</h4>
+          <h4>
+            Score Average: {(user && user.sumPoints / user.gamesPlayed) || 0}
+          </h4>
           {!edit ? (
             <h4>
               Bio: {user && user.bio}{' '}
