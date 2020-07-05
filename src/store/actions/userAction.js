@@ -35,9 +35,7 @@ export const setScoreSum = () => {
 
         .get()
         .then(QuerySnapshot => {
-          console.log(scoreIds[i]);
           let results = QuerySnapshot.get('scores');
-          console.log(results.id);
         });
     }
   };

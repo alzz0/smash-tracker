@@ -31,12 +31,8 @@ function Users({
   const [searchUser, setSearchUser] = useState('');
   const [checked, setChecked] = useState(false);
   const [startCurrentGame, setStartCurrentGame] = useState(false);
-  useEffect(() => {
-    if (runningGame && runningGame[0].runningGame === true) {
-      orderedUsersBy = 'points';
-    }
-    console.log(orderedUsersBy);
-  });
+  var currentRunningGame = runningGame && runningGame[0].runningGame;
+
   // var highestNum = undefined;
   // var secondHighest = undefined;
   // var thirdHighest = undefined;
@@ -221,9 +217,7 @@ function Users({
           </button>
           <button
             disabled={
-              superUsers.includes(auth.uid) && runningGame[0].runningGame
-                ? false
-                : true
+              superUsers.includes(auth.uid) && currentRunningGame ? false : true
             }
             className='btn-floating btn-large waves-effect waves-light red'
             onClick={() => incrementPoint(user[1].id)}
@@ -253,15 +247,11 @@ function Users({
           type='submit'
           className='waves-effect waves-light btn-large'
           onClick={e => {
-            runningGame && runningGame[0].runningGame
-              ? cancelStartGame(e)
-              : beginGame(e);
+            currentRunningGame ? cancelStartGame(e) : beginGame(e);
           }}
           //  onClick={e => beginGame(e)}
         >
-          {runningGame && runningGame[0].runningGame
-            ? 'Cancel Game'
-            : 'Start Game'}
+          {currentRunningGame ? 'Cancel Game' : 'Start Game'}
         </button>
       </span>
     </div>
