@@ -147,7 +147,7 @@ function ProjectSummary({
               thumb_down
             </i>
 
-            {project.dislikes}
+            <span>{project.dislikes}</span>
           </span>
         )}
         <div
@@ -170,7 +170,10 @@ function ProjectSummary({
         <p className='grey-text'>
           {moment(project.createdAt.toDate()).calendar()}
         </p>
-        {project.comment && ` ${project.comment.length} Comments`}
+        {project.comment &&
+          ` ${project.comment.length} ${
+            project.comment.length < 2 ? 'Comment' : 'Comments'
+          }`}
       </div>
       <p
         style={{

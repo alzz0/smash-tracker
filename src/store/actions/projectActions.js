@@ -48,8 +48,8 @@ export const removeDislikePost = (postId, auth) => {
 
     const db = firebase.firestore();
 
-    const decrement = firebase.firestore.FieldValue.increment(-1);
-    const storyRef = db.collection('projects').doc(postId);
+    let decrement = firebase.firestore.FieldValue.increment(-1);
+    let storyRef = db.collection('projects').doc(postId);
 
     storyRef.update({
       dislikedBy: firebase.firestore.FieldValue.arrayRemove({ auth }),
@@ -65,8 +65,8 @@ export const removeLikePost = (postId, auth) => {
 
     const db = firebase.firestore();
 
-    const decrement = firebase.firestore.FieldValue.increment(-1);
-    const storyRef = db.collection('projects').doc(postId);
+    let decrement = firebase.firestore.FieldValue.increment(-1);
+    let storyRef = db.collection('projects').doc(postId);
 
     storyRef.update({
       likedBy: firebase.firestore.FieldValue.arrayRemove({ auth }),

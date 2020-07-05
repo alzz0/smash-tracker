@@ -15,6 +15,10 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
 
     var day = new Date(parseInt(date, 10));
     var dayString = day.toString('MM/dd/yy HH:mm:ss');
+    var sumPoints = user.sumPoints;
+    var fullName = `${user.firstName} ${user.lastName}`;
+    var gamesPlayed = user.gamesPlayed;
+    var averageScore = user.sumPoints / user.gamesPlayed || 0;
   }
 
   function handleSubmit(e) {
@@ -31,14 +35,10 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
     <div className='container section project-details'>
       <div className='card z-depth-0 project-summary'>
         <div className='card-content'>
-          <h3>
-            Name: {user && user.firstName} {user && user.lastName}
-          </h3>
-          <h4>Score: {user && user.sumPoints}</h4>
-          <h4>Games Played: {user && user.gamesPlayed}</h4>
-          <h4>
-            Score Average: {(user && user.sumPoints / user.gamesPlayed) || 0}
-          </h4>
+          <h3>Name: {fullName}</h3>
+          <h4>Score: {sumPoints}</h4>
+          <h4>Games Played: {gamesPlayed}</h4>
+          <h4>Score Average: {user && averageScore.toFixed(2)}</h4>
           {!edit ? (
             <h4>
               Bio: {user && user.bio}{' '}

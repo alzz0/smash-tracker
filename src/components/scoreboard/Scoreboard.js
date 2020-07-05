@@ -3,8 +3,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { firestoreConnect } from 'react-redux-firebase';
-function Scoreboard({ scoreboard }) {
+function Scoreboard({ scoreboard, users }) {
   const [stateData, setStateData] = useState();
+  const [leaderBoards, setLeaderBoard] = useState(false);
   var fullData = [];
   let days = [];
   var points = [];
@@ -81,7 +82,7 @@ function Scoreboard({ scoreboard }) {
       });
   }
 
-  return (
+  let highScores = !leaderBoards ? (
     <Fragment>
       <select
         style={{ maxWidth: '100%', fontSize: '16px' }}
@@ -115,12 +116,37 @@ function Scoreboard({ scoreboard }) {
           })}
       </tbody>
     </Fragment>
+  ) : (
+    <Fragment>
+      <tbody>
+        <tr>
+          <th>TOTAL</th>
+          <th>avg</th>
+        </tr>
+
+        {users &&
+          users.reverse().map(data => {
+            return (
+              <Fragment key={data.id}>
+                <tr>
+                  <td>{data.firstName}</td>
+                  <th>{data.points}</th>
+                </tr>
+              </Fragment>
+            );
+          })}
+      </tbody>
+    </Fragment>
   );
+
+  return highScores;
 }
 
 const mapStateToProps = state => {
   return {
     scoreboard: state.firestore.ordered.scoreboard,
+
+    users: state.firestore.ordered.users,
   };
 };
 export default compose(
@@ -129,6 +155,9 @@ export default compose(
     {
       collection: 'scoreboard',
       orderBy: ['createdAt', 'desc'],
+    },
+    {
+      collection: 'users',
     },
   ])
 )(Scoreboard);

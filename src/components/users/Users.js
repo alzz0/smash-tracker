@@ -7,15 +7,19 @@ import { SearchBox } from '../../utils/SearchBox';
 import './users.css';
 import { superUsers } from '../../constants';
 import { calcScore } from '../../store/actions/calcScore';
+import { startGame, cancelStartGame } from '../../store/actions/gameAction';
 import {
   incrementPoint,
   decrementPoint,
   setHighestScore,
 } from '../../store/actions/userAction';
-
+var orderedUsersBy = 'sumPoints';
 function Users({
   setHighestScore,
+  cancelStartGame,
+  startGame,
   users,
+  runningGame,
   incrementPoint,
   decrementPoint,
   auth,
@@ -26,7 +30,13 @@ function Users({
   const [points, setPoints] = useState(0);
   const [searchUser, setSearchUser] = useState('');
   const [checked, setChecked] = useState(false);
-
+  const [startCurrentGame, setStartCurrentGame] = useState(false);
+  useEffect(() => {
+    if (runningGame && runningGame[0].runningGame === true) {
+      orderedUsersBy = 'points';
+    }
+    console.log(orderedUsersBy);
+  });
   // var highestNum = undefined;
   // var secondHighest = undefined;
   // var thirdHighest = undefined;
@@ -67,6 +77,10 @@ function Users({
   //     thirdHighest = Math.max(...scoreBoard);
   //   }
   // }
+  function beginGame(e) {
+    e.preventDefault();
+    startGame();
+  }
 
   function endGame(e) {
     e.preventDefault();
@@ -206,7 +220,11 @@ function Users({
             <i className=' material-icons'>exposure_neg_1</i>
           </button>
           <button
-            disabled={superUsers.includes(auth.uid) ? false : true}
+            disabled={
+              superUsers.includes(auth.uid) && runningGame[0].runningGame
+                ? false
+                : true
+            }
             className='btn-floating btn-large waves-effect waves-light red'
             onClick={() => incrementPoint(user[1].id)}
           >
@@ -219,6 +237,7 @@ function Users({
   return (
     <div className='dashboard-container'>
       <SearchBox handleInput={handleInput} />
+
       <div className='row'>{data}</div>
       <span style={{ margin: '40px' }}>
         <button
@@ -228,6 +247,21 @@ function Users({
           onClick={e => endGame(e)}
         >
           End Game
+        </button>
+        <button
+          disabled={superUsers.includes(auth.uid) ? false : true}
+          type='submit'
+          className='waves-effect waves-light btn-large'
+          onClick={e => {
+            runningGame && runningGame[0].runningGame
+              ? cancelStartGame(e)
+              : beginGame(e);
+          }}
+          //  onClick={e => beginGame(e)}
+        >
+          {runningGame && runningGame[0].runningGame
+            ? 'Cancel Game'
+            : 'Start Game'}
         </button>
       </span>
     </div>
@@ -240,21 +274,25 @@ const mapDispatchToprops = dispatch => {
     decrementPoint: points => dispatch(decrementPoint(points)),
     setHighestScore: highestNum => dispatch(setHighestScore(highestNum)),
     calcScore: scores => dispatch(calcScore(scores)),
+    startGame: () => dispatch(startGame()),
+    cancelStartGame: () => dispatch(cancelStartGame()),
   };
 };
 const mapStateToProps = state => {
   return {
     users: state.firestore.ordered.users,
     auth: state.firebase.auth,
+    runningGame: state.firestore.ordered.runningGame,
   };
 };
 
 export default compose(
   connect(mapStateToProps, mapDispatchToprops),
   firestoreConnect([
+    { collection: 'runningGame' },
     {
       collection: 'users',
-      orderBy: ['points'],
+      orderBy: 'points',
     },
   ])
 )(withRouter(Users));
