@@ -6,33 +6,15 @@ import { firestoreConnect } from 'react-redux-firebase';
 function Scoreboard({ scoreboard, users }) {
   const [stateData, setStateData] = useState();
   const [leaderBoards, setLeaderBoard] = useState(false);
+  const [scoreToggle, setScoreToggle] = useState(true);
+  const [filterValue, setFilterValue] = useState('sumPoints');
   var fullData = [];
   let days = [];
   var points = [];
-  //console.log(users);
 
-  // useEffect(
-  //   users => {
-  //     // users &&
-  //     //   users.map(user => {
-  //     //     console.log(user);
-  //     //   });
-  //     console.log(users && users);
-  //     const list = [
-  //       { color: 'white', size: 'XXL' },
-  //       { color: 'red', size: 'XL' },
-  //       { color: 'black', size: 'M' },
-  //     ];
-  //     //console.log(list);
-  //     // console.log(users);
-
-  //     var sortedUsers =
-  //       users && users.sort((a, b) => (a.sumPoints > b.sumPoints ? 1 : -1));
-
-  //     // users && users.sort((a, b) => b - a);
-  //   },
-  //   [users]
-  // );
+  useEffect(() => {
+    handleSort();
+  }, [users]);
 
   useEffect(() => {
     handleFilter();
@@ -42,6 +24,28 @@ function Scoreboard({ scoreboard, users }) {
     scoreboard.map(score => {
       days.push(score);
     });
+
+  function handleSort(e) {
+    // sort by avg
+    if (e === 'averagePoints') {
+      let sortedUsers =
+        users &&
+        users.slice().sort((a, b) => {
+          if (a.gamesPlayed > 0) {
+            let aAvg = a.sumPoints / a.gamesPlayed;
+            let bAvg = b.sumPoints / b.gamesPlayed;
+
+            return aAvg < bAvg ? 1 : -1;
+          }
+        });
+      setLeaderBoard(sortedUsers);
+    } else {
+      let sortedUsers =
+        users &&
+        users.slice().sort((a, b) => (a.sumPoints < b.sumPoints ? 1 : -1));
+      setLeaderBoard(sortedUsers);
+    }
+  }
   function handleFilter(id) {
     var data =
       scoreboard &&
@@ -65,8 +69,20 @@ function Scoreboard({ scoreboard, users }) {
       });
   }
 
-  let highScores = !leaderBoards ? (
+  function handleFilterSort(e) {
+    setFilterValue(e.target.value);
+    handleSort(e.target.value);
+  }
+
+  let highScores = !scoreToggle ? (
     <Fragment>
+      <button
+        className='waves-effect waves-light btn'
+        onClick={() => setScoreToggle(true)}
+      >
+        {' '}
+        highScores
+      </button>
       <select
         style={{ maxWidth: '100%', fontSize: '16px' }}
         className='browser-default'
@@ -101,19 +117,50 @@ function Scoreboard({ scoreboard, users }) {
     </Fragment>
   ) : (
     <Fragment>
+      <button
+        className='waves-effect waves-light btn'
+        onClick={() => setScoreToggle(false)}
+      >
+        {' '}
+        History
+      </button>
+      <select
+        style={{ maxWidth: '100%', fontSize: '16px' }}
+        className='browser-default'
+        onChange={e => handleFilterSort(e)}
+        // defaultValue={filterValue}
+        defaultValue=''
+      >
+        <option disabled={true} value=''>
+          Filter by highest scores or highest average
+        </option>
+        <option key={'sumPoints'} id={'sumPoints'} value={'sumPoints'}>
+          Totalpoints
+        </option>
+        <option
+          key={'averagePoints'}
+          id={'averagePoints'}
+          value={'averagePoints'}
+        >
+          Average Points
+        </option>
+      </select>
       <tbody>
         <tr>
-          <th>TOTAL</th>
-          <th>avg</th>
+          <th>Name</th>
+          <th>Total</th>
+          <th>Average</th>
         </tr>
 
-        {users &&
-          users.reverse().map(data => {
+        {leaderBoards &&
+          leaderBoards.map(data => {
+            let avg = data.sumPoints / data.gamesPlayed;
             return (
               <Fragment key={data.id}>
                 <tr>
                   <td>{data.firstName}</td>
-                  <th>{data.points}</th>
+                  <td>{data.sumPoints}</td>
+                  <td>{avg.toFixed(2) || 0}</td>
                 </tr>
               </Fragment>
             );
