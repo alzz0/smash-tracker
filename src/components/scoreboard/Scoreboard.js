@@ -147,17 +147,27 @@ function Scoreboard({ scoreboard, users }) {
       </select>
       <tbody>
         <tr>
+          <th>Rank</th>
           <th>Name</th>
           <th>Total</th>
           <th>Average</th>
         </tr>
 
         {leaderBoards &&
-          leaderBoards.map(data => {
+          leaderBoards.map((data, index) => {
             let avg = data.sumPoints / data.gamesPlayed;
+            var rankings =
+              index === 0 ? (
+                <span style={{ color: '#FAFAD2' }}>Champion</span>
+              ) : index === 1 ? (
+                'Runner Up'
+              ) : (
+                index
+              );
             return (
               <Fragment key={data.id}>
                 <tr>
+                  <td>{rankings}</td>
                   <td>{data.firstName}</td>
                   <td>{data.sumPoints}</td>
                   <td>{avg.toFixed(2) || 0}</td>
