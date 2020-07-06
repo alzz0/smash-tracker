@@ -98,15 +98,25 @@ function Scoreboard({ scoreboard, users }) {
 
       <tbody>
         <tr>
+          <th>Rank</th>
           <th>Name</th>
           <th>Points</th>
         </tr>
 
         {stateData &&
-          stateData.reverse().map(data => {
+          stateData.reverse().map((data, index) => {
+            var rankings =
+              index === 0 ? (
+                <span style={{ color: '#FAFAD2' }}>Champion</span>
+              ) : index === 1 ? (
+                'Runner Up'
+              ) : (
+                index
+              );
             return (
               <Fragment key={data.id}>
                 <tr>
+                  <td>{rankings}</td>
                   <td>{data.firstName}</td>
                   <th>{data.points}</th>
                 </tr>
@@ -132,7 +142,7 @@ function Scoreboard({ scoreboard, users }) {
         defaultValue=''
       >
         <option disabled={true} value=''>
-          Filter by highest scores or highest average
+          Filter by total points or game average
         </option>
         <option key={'sumPoints'} id={'sumPoints'} value={'sumPoints'}>
           Totalpoints
@@ -151,6 +161,7 @@ function Scoreboard({ scoreboard, users }) {
           <th>Name</th>
           <th>Total</th>
           <th>Average</th>
+          <th>Total Games Played</th>
         </tr>
 
         {leaderBoards &&
@@ -171,6 +182,7 @@ function Scoreboard({ scoreboard, users }) {
                   <td>{data.firstName}</td>
                   <td>{data.sumPoints}</td>
                   <td>{avg.toFixed(2) || 0}</td>
+                  <td>{data.gamesPlayed}</td>
                 </tr>
               </Fragment>
             );

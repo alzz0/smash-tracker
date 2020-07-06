@@ -31,51 +31,22 @@ function Users({
   const [searchUser, setSearchUser] = useState('');
   const [checked, setChecked] = useState(false);
   const [startCurrentGame, setStartCurrentGame] = useState(false);
+  const [sortedUsers, setSortedUsers] = useState();
   var currentRunningGame = runningGame && runningGame[0].runningGame;
 
-  // var highestNum = undefined;
-  // var secondHighest = undefined;
-  // var thirdHighest = undefined;
-
-  // useEffect(() => {
-  //   setHighestScore(highestNum);
-  // });
-
-  // var scoreBoard =
-  //   users &&
-  //   users.map(user => {
-  //     return user.points;
-  //   });
-  // calculate();
-
-  // function calculate() {
-  //   if (scoreBoard) {
-  //     for (var i = 0; i < scoreBoard.length; i++) {
-  //       if (scoreBoard[i] > highestNum) {
-  //         highestNum = scoreBoard[i];
-  //       }
-  //     }
-  //     // Get second highest score
-  //     let indexOfHighest = scoreBoard.indexOf(highestNum);
-
-  //     scoreBoard.splice(indexOfHighest, 1);
-  //     secondHighest = Math.max(...scoreBoard);
-  //   }
-
-  //   // Get third highest score
-  //   if (secondHighest) {
-  //     if (secondHighest === secondHighest) {
-  //       var indexOfSecondHighest = scoreBoard.indexOf(highestNum);
-  //       console.log(secondHighest);
-  //     }
-
-  //     scoreBoard.splice(indexOfSecondHighest, 1);
-  //     thirdHighest = Math.max(...scoreBoard);
-  //   }
-  // }
   function beginGame(e) {
     e.preventDefault();
     startGame();
+  }
+  useEffect(() => {
+    handleSort();
+  }, [users]);
+  function handleSort() {
+    // sort by total points
+
+    let sortedUsersArr =
+      newObj && newObj.sort((a, b) => a[1].sumPoints - b[1].sumPoints);
+    setSortedUsers(sortedUsersArr);
   }
 
   function endGame(e) {
@@ -103,8 +74,6 @@ function Users({
 
   function fighterPlaying(e) {
     e.preventDefault();
-    //e.stopPropagation();
-    //handleSwitchChange(e);
   }
 
   function handleSwitchChange(e) {
@@ -114,24 +83,29 @@ function Users({
     setChecked(!checked);
     //setChecked({ ...checked, [e.target.id]: !e.target.value });
   }
-  let filteredUsers =
-    newObj &&
-    newObj.filter(user => {
-      return user[1].firstName.toLowerCase().includes(searchUser.toLowerCase());
-    });
+  if (currentRunningGame === true) {
+    var filteredUsers =
+      newObj &&
+      newObj.filter(user => {
+        return user[1].firstName
+          .toLowerCase()
+          .includes(searchUser.toLowerCase());
+      });
+  } else {
+    var filteredUsers =
+      sortedUsers &&
+      sortedUsers.filter(user => {
+        return user[1].firstName
+          .toLowerCase()
+          .includes(searchUser.toLowerCase());
+      });
+  }
 
   let data =
     filteredUsers &&
     filteredUsers.reverse().map((user, index) => {
       return (
         <div className='col s12 m6' key={user[1].id}>
-          {/* <input
-            type='checkbox'
-            onChange={handleSwitchChange}
-            value={checked}
-            name={'user[1].id'}
-            checked={checked}
-          /> */}
           <Link key={user[1].id} to={`/profile/${user[1].id}`}>
             <div className='card z-depth-0 project-summary'>
               {index === 0 ? (
