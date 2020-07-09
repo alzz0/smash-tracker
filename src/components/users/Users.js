@@ -175,7 +175,12 @@ function Users({
                   </p>
                 </span>
 
-                <p>Points: {user[1].points}</p>
+                {/* <p>Points: {user[1].points}</p> */}
+                <p>
+                  {currentRunningGame
+                    ? `Points ${user[1].points}`
+                    : `Total points ${user[1].sumPoints}`}
+                </p>
               </div>
             </div>
           </Link>

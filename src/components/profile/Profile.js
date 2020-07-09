@@ -30,6 +30,9 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
   function handleChange(e) {
     setBio({ ...bio, [e.target.name]: e.target.value });
   }
+  function makeFigherOfTheNight(e) {
+    console.log(e.target.value);
+  }
 
   return (
     <div className='container section project-details'>
@@ -69,6 +72,7 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
                 maxLength='100'
                 placeholder={user.bio || ' Update Bio'}
               />
+
               <div className='input-field' style={{ display: 'inline' }}>
                 <button
                   style={{ marginRight: '10px' }}
@@ -87,6 +91,33 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
               </div>
             </form>
           )}
+          {/* <h4>Fighter of the Night: </h4>
+          <div className='switch'>
+            <label>
+              Off
+              <input type='checkbox' onClick={makeFigherOfTheNight} />
+              <span className='lever'></span>
+              On
+            </label>
+          </div> */}
+
+          {/* <span style={{ display: 'inline-flex' }}> */}
+          {/* <h4 onClick={makeFigherOfTheNight}>
+              <i className='material-icons'>star_border</i>
+            </h4>
+            <h4>
+              <i className='material-icons'>star_border</i>
+            </h4>
+            <h4>
+              <i className='material-icons'>star_border</i>
+            </h4>
+            <h4>
+              <i className='material-icons'>star_border</i>
+            </h4>
+            <h4>
+              <i className='material-icons'>star_border</i>
+            </h4>
+          </span> */}
         </div>
 
         <div className='card-action gray lighten-4 grey-text'>
