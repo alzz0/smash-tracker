@@ -27,7 +27,13 @@ export const createProject = project => {
   };
 };
 
-export const dislikePost = (postId, auth) => {
+export const dislikePost = (postId, unfilteredAuth) => {
+  let auth = {
+    firstName: unfilteredAuth.firstName,
+    lastName: unfilteredAuth.lastName,
+    id: unfilteredAuth.id,
+  };
+
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
 
@@ -36,13 +42,18 @@ export const dislikePost = (postId, auth) => {
     const increment = firebase.firestore.FieldValue.increment(1);
     const storyRef = db.collection('projects').doc(postId);
     storyRef.update({
-      dislikedBy: firebase.firestore.FieldValue.arrayUnion({ auth }),
+      dislikedBy: firebase.firestore.FieldValue.arrayUnion(auth),
     });
     storyRef.update({ dislikes: increment });
   };
 };
 
-export const removeDislikePost = (postId, auth) => {
+export const removeDislikePost = (postId, unfilteredAuth) => {
+  let auth = {
+    firstName: unfilteredAuth.firstName,
+    lastName: unfilteredAuth.lastName,
+    id: unfilteredAuth.id,
+  };
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
 
@@ -52,14 +63,20 @@ export const removeDislikePost = (postId, auth) => {
     let storyRef = db.collection('projects').doc(postId);
 
     storyRef.update({
-      dislikedBy: firebase.firestore.FieldValue.arrayRemove({ auth }),
+      dislikedBy: firebase.firestore.FieldValue.arrayRemove(auth),
     });
 
     storyRef.update({ dislikes: decrement });
   };
 };
 
-export const removeLikePost = (postId, auth) => {
+export const removeLikePost = (postId, unfilteredAuth) => {
+  const auth = {
+    firstName: unfilteredAuth.firstName,
+    lastName: unfilteredAuth.lastName,
+    id: unfilteredAuth.id,
+  };
+
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
 
@@ -69,14 +86,19 @@ export const removeLikePost = (postId, auth) => {
     let storyRef = db.collection('projects').doc(postId);
 
     storyRef.update({
-      likedBy: firebase.firestore.FieldValue.arrayRemove({ auth }),
+      likedBy: firebase.firestore.FieldValue.arrayRemove(auth),
     });
 
     storyRef.update({ likes: decrement });
   };
 };
 
-export const likePost = (postId, auth) => {
+export const likePost = (postId, unfilteredAuth) => {
+  const auth = {
+    firstName: unfilteredAuth.firstName,
+    lastName: unfilteredAuth.lastName,
+    id: unfilteredAuth.id,
+  };
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
@@ -86,7 +108,7 @@ export const likePost = (postId, auth) => {
     const increment = firebase.firestore.FieldValue.increment(1);
     const storyRef = db.collection('projects').doc(postId);
     storyRef.update({
-      likedBy: firebase.firestore.FieldValue.arrayUnion({ auth }),
+      likedBy: firebase.firestore.FieldValue.arrayUnion(auth),
     });
     storyRef.update({ likes: increment });
   };

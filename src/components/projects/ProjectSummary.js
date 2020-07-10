@@ -31,8 +31,8 @@ function ProjectSummary({
 
     project.dislikedBy &&
       project.dislikedBy.map(user => {
-        disLikelist.push(user.auth.id);
-        dislikeNames.push(` ${user.auth.firstName}  ${user.auth.lastName}`);
+        disLikelist.push(user.id);
+        dislikeNames.push(` ${user.firstName}  ${user.lastName}`);
       });
     setProjectDislikedBy(disLikelist);
     setProjectDislikeNames(dislikeNames);
@@ -40,8 +40,8 @@ function ProjectSummary({
     // list of liked users
     project.likedBy &&
       project.likedBy.map(user => {
-        likeList.push(user.auth.id);
-        likeNames.push(` ${user.auth.firstName}  ${user.auth.lastName}`);
+        likeList.push(user.id || user.auth.id);
+        likeNames.push(` ${user.firstName}  ${user.lastName}`);
       });
     setProjectLikedBy(likeList);
     setProjectLikeNames(likeNames);
@@ -65,6 +65,7 @@ function ProjectSummary({
   function like(e) {
     e.preventDefault();
     e.stopPropagation();
+
     if (auth.uid) {
       if (projectDislikedBy.includes(auth.uid)) {
         removeDislikePost(project.id, user);

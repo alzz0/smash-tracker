@@ -1,4 +1,5 @@
 export const addComment = (comment, id) => {
+  console.log(comment);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
