@@ -152,6 +152,19 @@ function Users({
                 style={{ height: '200px' }}
                 className='card-content grey-text text-darken-3'
               >
+                <div
+                  className={`tier-label ${
+                    user[1].tier === 'A'
+                      ? 'a-tier'
+                      : user[1].tier === 'B'
+                      ? 'b-tier'
+                      : user[1].tier === 'C'
+                      ? 'c-tier'
+                      : ''
+                  }`}
+                >
+                  {user[1].tier}
+                </div>
                 <span
                   className={`card-title custom-card ${
                     index === 0

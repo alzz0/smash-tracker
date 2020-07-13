@@ -162,6 +162,12 @@ function Scoreboard({ scoreboard, users }) {
           <th>Total</th>
           <th>Average</th>
           <th>Total Games Played</th>
+          <th
+            id='tier-hover'
+            title='Tier A: Average greater than or equal to 8. Tier B: Average Less than 8 and greater than or equal to 5. Tier C Average less than 5 '
+          >
+            Tier
+          </th>
         </tr>
 
         {leaderBoards &&
@@ -183,6 +189,7 @@ function Scoreboard({ scoreboard, users }) {
                   <td>{data.sumPoints}</td>
                   <td>{avg.toFixed(2) || 0}</td>
                   <td>{data.gamesPlayed}</td>
+                  <td>{data.tier}</td>
                 </tr>
               </Fragment>
             );

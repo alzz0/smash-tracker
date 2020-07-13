@@ -21,13 +21,29 @@ export const calcScore = scores => {
           .get()
           .then(snapShot => {
             // write code here to update total
-
             snapShot.docs.forEach(doc => {
               let points = doc.get('points');
+
               let prevSumPoints = doc.get('sumPoints');
               let totalGamesPlayed = doc.get('gamesPlayed');
+              let totalPoints = prevSumPoints + points;
+              let average = totalPoints / (totalGamesPlayed + 1);
 
               if (points > 0) {
+                if (average >= 8) {
+                  doc.ref.update({
+                    tier: 'A',
+                  });
+                } else if (average < 8 && average >= 5) {
+                  doc.ref.update({
+                    tier: 'B',
+                  });
+                } else {
+                  doc.ref.update({
+                    tier: 'C',
+                  });
+                }
+
                 doc.ref.update({
                   sumPoints: prevSumPoints + points,
                   gamesPlayed: totalGamesPlayed + 1,
@@ -37,6 +53,7 @@ export const calcScore = scores => {
             });
           });
       });
+
     runningGame.update({
       runningGame: false,
     });

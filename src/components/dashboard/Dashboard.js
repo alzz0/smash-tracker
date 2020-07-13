@@ -15,6 +15,7 @@ function Dashboard({
   setScoreSum,
 }) {
   var highestNum = 1;
+
   useEffect(() => {
     setScoreSum();
   }, []);

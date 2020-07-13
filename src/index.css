@@ -94,3 +94,30 @@ input[type='checkbox'] {
   opacity: 1 !important;
   z-index: 9999999999999;
 }
+
+#tier-hover {
+  cursor: help;
+}
+
+.tier-label {
+  display: inline;
+  position: absolute;
+  color: #404040;
+  font-weight: bold;
+  bottom: 0;
+  right: 0;
+  border-radius: 2px;
+  width: 19px;
+  text-align: center;
+}
+.a-tier {
+  background-color: #95e8f3;
+}
+
+.b-tier {
+  background-color: #95e8f3;
+}
+
+.c-tier {
+  background-color: #95e8f3;
+}
