@@ -21,7 +21,7 @@ function ProjectDetails(props) {
   const [commentId, setCommentId] = useState();
   const [comment, setComment] = useState({ comment: '', user: {} });
   const [commentTimmer, setCommentTimer] = useState(false);
-  const [commentUpdateDetails, setCommentUpdateDetails] = useState();
+
   const {
     project,
     deletePost,
@@ -34,7 +34,7 @@ function ProjectDetails(props) {
     user,
     match,
   } = props;
-  let editedComment = <span>Edited</span>;
+
   const id = props.match.params.id;
   const [updateProject, setUpdateProject] = useState({
     title: '',
@@ -95,11 +95,11 @@ function ProjectDetails(props) {
   function editCommentFunction(e) {
     setCommentId(e.commentId);
     setEditCommentState(!editCommentState);
+    setUpdatedComment(e.comment.comment);
   }
 
   function handleCommentUpdate(e) {
     setUpdatedComment(e.target.value);
-    setCommentUpdateDetails(e.target.value);
   }
   function handleCommentUpdateSubmit(e) {
     e.preventDefault();
@@ -109,7 +109,6 @@ function ProjectDetails(props) {
 
   if (project && project.comment) {
     var comments = project.comment.map((com, index) => {
-      let commentValue = com.comment.comment;
       return (
         <div key={index} style={{ height: 'auto', minHeight: '60px' }}>
           <h6 style={{ fontSize: '15px' }}>
@@ -122,12 +121,14 @@ function ProjectDetails(props) {
               </Link>
             </strong>
             {moment(com.createdAt.toDate()).calendar()}{' '}
-            <button
-              className='waves-effect waves-light btn'
-              onClick={e => editCommentFunction(com)}
-            >
-              Edit
-            </button>
+            {auth.uid === com.comment.user.id && (
+              <button
+                className='waves-effect waves-light btn'
+                onClick={e => editCommentFunction(com)}
+              >
+                Edit
+              </button>
+            )}
             {auth.uid === com.comment.user.id && (
               <button
                 className='waves-effect waves-light btn'
@@ -145,7 +146,7 @@ function ProjectDetails(props) {
             >
               <input
                 autoFocus
-                value={commentUpdateDetails}
+                value={updatedComment.replace('89456799', '')}
                 type='text'
                 onChange={handleCommentUpdate}
               />{' '}

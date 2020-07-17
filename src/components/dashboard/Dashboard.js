@@ -55,7 +55,7 @@ function Dashboard({
         </div>
       </div>
       {/* version number */}
-      <p style={{ opacity: '0.1' }}>v1.1.2</p>
+      <p style={{ opacity: '0.1' }}>v1.1.4</p>
     </div>
   );
 }
