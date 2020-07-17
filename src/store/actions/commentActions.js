@@ -53,6 +53,7 @@ export const editComment = (projectId, id, updatedComment, user) => {
 
     return comments.get().then(doc => {
       doc.data().comment.map(com => {
+        console.log(com);
         let oldComments = [...doc.data().comment];
         let filtCom = oldComments.filter(c => c.commentId != id);
 

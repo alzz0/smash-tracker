@@ -152,7 +152,7 @@ function ProjectDetails(props) {
               />{' '}
             </form>
           ) : (
-            <p style={{ marginTop: '0', fontSize: '16px' }}>
+            <div style={{ marginTop: '0', fontSize: '16px' }}>
               {com.comment.comment.includes('89456799') ? (
                 <p>
                   {com.comment.comment.replace('89456799', '')}{' '}
@@ -169,12 +169,13 @@ function ProjectDetails(props) {
               ) : (
                 com.comment.comment
               )}
-            </p>
+            </div>
           )}
         </div>
       );
     });
   }
+
   if (project) {
     if (edit === true) {
       return (
