@@ -8,12 +8,20 @@ import {
   deletePost,
   updateProjectContent,
 } from '../../store/actions/projectActions';
-import { addComment } from '../../store/actions/commentActions';
+import {
+  addComment,
+  deleteComment,
+  editComment,
+} from '../../store/actions/commentActions';
 
 function ProjectDetails(props) {
   const [edit, setEdit] = useState(false);
+  const [editCommentState, setEditCommentState] = useState(false);
+  const [updatedComment, setUpdatedComment] = useState();
+  const [commentId, setCommentId] = useState();
   const [comment, setComment] = useState({ comment: '', user: {} });
   const [commentTimmer, setCommentTimer] = useState(false);
+  const [commentUpdateDetails, setCommentUpdateDetails] = useState();
   const {
     project,
     deletePost,
@@ -21,8 +29,12 @@ function ProjectDetails(props) {
     updateProjectContent,
     auth,
     addComment,
+    deleteComment,
+    editComment,
     user,
+    match,
   } = props;
+  let editedComment = <span>Edited</span>;
   const id = props.match.params.id;
   const [updateProject, setUpdateProject] = useState({
     title: '',
@@ -80,8 +92,24 @@ function ProjectDetails(props) {
     setComment({ [e.target.name]: e.target.value, user });
   }
 
+  function editCommentFunction(e) {
+    setCommentId(e.commentId);
+    setEditCommentState(!editCommentState);
+  }
+
+  function handleCommentUpdate(e) {
+    setUpdatedComment(e.target.value);
+    setCommentUpdateDetails(e.target.value);
+  }
+  function handleCommentUpdateSubmit(e) {
+    e.preventDefault();
+    editComment(match.params.id, commentId, updatedComment, user);
+    setEditCommentState(false);
+  }
+
   if (project && project.comment) {
     var comments = project.comment.map((com, index) => {
+      let commentValue = com.comment.comment;
       return (
         <div key={index} style={{ height: 'auto', minHeight: '60px' }}>
           <h6 style={{ fontSize: '15px' }}>
@@ -90,14 +118,58 @@ function ProjectDetails(props) {
                 style={{ color: 'black' }}
                 to={`/profile/${com.comment.user.id}`}
               >
-                {com.comment.user.firstName} {com.comment.user.lastName}
+                {com.comment.user.firstName} {com.comment.user.lastName}{' '}
               </Link>
-            </strong>{' '}
-            {moment(com.createdAt.toDate()).calendar()}
+            </strong>
+            {moment(com.createdAt.toDate()).calendar()}{' '}
+            <button
+              className='waves-effect waves-light btn'
+              onClick={e => editCommentFunction(com)}
+            >
+              Edit
+            </button>
+            {auth.uid === com.comment.user.id && (
+              <button
+                className='waves-effect waves-light btn'
+                onClick={e => deleteComment(match.params.id, com.commentId)}
+              >
+                Delete
+              </button>
+            )}
           </h6>
-          <p style={{ marginTop: '0', fontSize: '16px' }}>
-            {com.comment.comment}
-          </p>
+
+          {editCommentState && com.commentId == commentId ? (
+            <form
+              style={{ padding: '0', margin: '0' }}
+              onSubmit={handleCommentUpdateSubmit}
+            >
+              <input
+                autoFocus
+                value={commentUpdateDetails}
+                type='text'
+                onChange={handleCommentUpdate}
+              />{' '}
+            </form>
+          ) : (
+            <p style={{ marginTop: '0', fontSize: '16px' }}>
+              {com.comment.comment.includes('89456799') ? (
+                <p>
+                  {com.comment.comment.replace('89456799', '')}{' '}
+                  <span
+                    style={{
+                      color: 'darkslategray',
+                      fontSize: 'small',
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    Edited
+                  </span>{' '}
+                </p>
+              ) : (
+                com.comment.comment
+              )}
+            </p>
+          )}
         </div>
       );
     });
@@ -246,7 +318,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 export default compose(
-  connect(mapStateToProps, { deletePost, updateProjectContent, addComment }),
+  connect(mapStateToProps, {
+    deletePost,
+    updateProjectContent,
+    addComment,
+    deleteComment,
+    editComment,
+  }),
   firestoreConnect([
     {
       collection: 'projects',
