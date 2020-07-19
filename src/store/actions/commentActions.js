@@ -1,5 +1,4 @@
 export const addComment = (comment, id) => {
-  console.log(comment);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
@@ -8,7 +7,7 @@ export const addComment = (comment, id) => {
     const db = firebase.firestore();
     const project = db.collection('projects').doc(id);
     let uniqueId = Date.now();
-    console.log(uniqueId);
+
     const commentObj = {
       comment,
       commentId: uniqueId,
@@ -53,7 +52,6 @@ export const editComment = (projectId, id, updatedComment, user) => {
 
     return comments.get().then(doc => {
       doc.data().comment.map(com => {
-        console.log(com);
         let oldComments = [...doc.data().comment];
         let filtCom = oldComments.filter(c => c.commentId != id);
 

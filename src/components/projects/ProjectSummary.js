@@ -171,7 +171,8 @@ function ProjectSummary({
         <p className='grey-text'>
           {moment(project.createdAt.toDate()).calendar()}
         </p>
-        {project.comment.length > 0 &&
+        {project.comment &&
+          project.comment.length > 0 &&
           ` ${project.comment.length} ${
             project.comment.length < 2 ? 'Comment' : 'Comments'
           }`}
