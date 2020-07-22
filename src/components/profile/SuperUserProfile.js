@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { Redirect } from 'react-router-dom';
+
 import {
   addSuperUser,
   deleteSuperUser,
@@ -14,24 +14,12 @@ function SuperUserProfile({
   superusers,
   deleteSuperUser,
 }) {
+  let superUsersArr = [];
   function selectedUser(e) {
     if (superUsersArr && !superUsersArr.includes(e.target.id)) {
       addSuperUser(e.target.id);
     }
   }
-
-  let superUsersArr = [];
-  const usersList =
-    users &&
-    users.map(user => {
-      return (
-        <div key={user.id}>
-          <li onClick={user => selectedUser(user)} id={user.id}>
-            {user.firstName}
-          </li>
-        </div>
-      );
-    });
 
   const superUsersList =
     superusers &&
@@ -39,11 +27,33 @@ function SuperUserProfile({
       superUsersArr.push(user.user);
       return (
         <div key={user.id}>
-          <li onClick={() => deleteSuperUser(user.id)}>{user.user}</li>
+          <li
+            className='user-list-super-profile'
+            onClick={() => deleteSuperUser(user.id)}
+          >
+            {user.user}
+          </li>
         </div>
       );
     });
 
+  const usersList =
+    users &&
+    users.map(user => {
+      return (
+        <div key={user.id}>
+          <li
+            className={`user-list-super-profile ${
+              superUsersArr.includes(user.id) ? 'current-superuser' : ''
+            }`}
+            onClick={user => selectedUser(user)}
+            id={user.id}
+          >
+            {user.firstName} {user.lastName}
+          </li>
+        </div>
+      );
+    });
   return (
     <div>
       <h1>users</h1>

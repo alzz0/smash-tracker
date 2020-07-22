@@ -95,35 +95,36 @@ function Scoreboard({ scoreboard, users }) {
             </option>
           ))}
       </select>
+      <table className='striped '>
+        <tbody>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Points</th>
+          </tr>
 
-      <tbody>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Points</th>
-        </tr>
-
-        {stateData &&
-          stateData.reverse().map((data, index) => {
-            var rankings =
-              index === 0 ? (
-                <span style={{ color: '#FAFAD2' }}>Champion</span>
-              ) : index === 1 ? (
-                'Runner Up'
-              ) : (
-                index
+          {stateData &&
+            stateData.reverse().map((data, index) => {
+              var rankings =
+                index === 0 ? (
+                  <span style={{ color: '#FAFAD2' }}>Champion</span>
+                ) : index === 1 ? (
+                  'Runner Up'
+                ) : (
+                  index
+                );
+              return (
+                <Fragment key={data.id}>
+                  <tr>
+                    <td>{rankings}</td>
+                    <td>{data.firstName}</td>
+                    <th>{data.points}</th>
+                  </tr>
+                </Fragment>
               );
-            return (
-              <Fragment key={data.id}>
-                <tr>
-                  <td>{rankings}</td>
-                  <td>{data.firstName}</td>
-                  <th>{data.points}</th>
-                </tr>
-              </Fragment>
-            );
-          })}
-      </tbody>
+            })}
+        </tbody>
+      </table>
     </Fragment>
   ) : (
     <Fragment>
@@ -155,46 +156,48 @@ function Scoreboard({ scoreboard, users }) {
           Average Points
         </option>
       </select>
-      <tbody>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Total</th>
-          <th>Average</th>
-          <th>Total Games Played</th>
-          <th
-            id='tier-hover'
-            title='Tier A: Average greater than or equal to 8. Tier B: Average Less than 8 and greater than or equal to 5. Tier C Average less than 5 '
-          >
-            Tier
-          </th>
-        </tr>
+      <table className='striped'>
+        <tbody>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Total</th>
+            <th>Average</th>
+            <th>Total Games Played</th>
+            <th
+              id='tier-hover'
+              title='Tier A: Average greater than or equal to 8. Tier B: Average Less than 8 and greater than or equal to 5. Tier C Average less than 5 '
+            >
+              Tier
+            </th>
+          </tr>
 
-        {leaderBoards &&
-          leaderBoards.map((data, index) => {
-            let avg = data.sumPoints / data.gamesPlayed;
-            var rankings =
-              index === 0 ? (
-                <span style={{ color: '#FAFAD2' }}>Champion</span>
-              ) : index === 1 ? (
-                'Runner Up'
-              ) : (
-                index
+          {leaderBoards &&
+            leaderBoards.map((data, index) => {
+              let avg = data.sumPoints / data.gamesPlayed;
+              var rankings =
+                index === 0 ? (
+                  <span style={{ color: '#FAFAD2' }}>Champion</span>
+                ) : index === 1 ? (
+                  'Runner Up'
+                ) : (
+                  index
+                );
+              return (
+                <Fragment key={data.id}>
+                  <tr>
+                    <td>{rankings}</td>
+                    <td>{data.firstName}</td>
+                    <td>{data.sumPoints}</td>
+                    <td>{avg.toFixed(2) || 0}</td>
+                    <td>{data.gamesPlayed}</td>
+                    <td>{data.tier}</td>
+                  </tr>
+                </Fragment>
               );
-            return (
-              <Fragment key={data.id}>
-                <tr>
-                  <td>{rankings}</td>
-                  <td>{data.firstName}</td>
-                  <td>{data.sumPoints}</td>
-                  <td>{avg.toFixed(2) || 0}</td>
-                  <td>{data.gamesPlayed}</td>
-                  <td>{data.tier}</td>
-                </tr>
-              </Fragment>
-            );
-          })}
-      </tbody>
+            })}
+        </tbody>
+      </table>
     </Fragment>
   );
 

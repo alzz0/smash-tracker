@@ -42,7 +42,12 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
   if (auth.uid === 'yxHKf6gbiMVJCyW5PqLTUEDiYu23' && controlPanel) {
     return (
       <Fragment>
-        <button onClick={handleControlPanelChange}>Profile</button>
+        <button
+          className='waves-effect waves-light btn'
+          onClick={handleControlPanelChange}
+        >
+          Profile
+        </button>
         <SuperUserProfile />
       </Fragment>
     );
@@ -50,7 +55,12 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
     return (
       <div className='container section project-details'>
         {auth.uid === 'yxHKf6gbiMVJCyW5PqLTUEDiYu23' && (
-          <button onClick={handleControlPanelChange}>Control Panel</button>
+          <button
+            className='waves-effect waves-light btn'
+            onClick={handleControlPanelChange}
+          >
+            Control Panel
+          </button>
         )}
         <div className='card z-depth-0 project-summary'>
           <div className='card-content'>
