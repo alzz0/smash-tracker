@@ -13,7 +13,7 @@ import {
   decrementPoint,
   setHighestScore,
 } from '../../store/actions/userAction';
-var orderedUsersBy = 'sumPoints';
+
 function Users({
   setHighestScore,
   cancelStartGame,
@@ -24,9 +24,10 @@ function Users({
   decrementPoint,
   auth,
   calcScore,
+  superusers,
 }) {
   const newObj = users && Object.entries(users);
-
+  let superusersList = [];
   const [points, setPoints] = useState(0);
   const [searchUser, setSearchUser] = useState('');
   const [checked, setChecked] = useState(false);
@@ -38,6 +39,15 @@ function Users({
     e.preventDefault();
     startGame();
   }
+
+  useEffect(() => {
+    superusers && superusers.map(user => superusersList.push(user.id));
+    console.log(superusersList);
+  }, []);
+  if (superusersList.includes('jfZSJ5LfxDwzgONl1JZ7')) {
+    console.log('yes');
+  }
+
   useEffect(() => {
     handleSort();
   }, [users]);
@@ -202,14 +212,18 @@ function Users({
             onClick={() => decrementPoint(user[1].id)}
             // disabled={superUsers.includes(auth.uid) ? false : true}
             disabled={
-              superUsers.includes(auth.uid) && user[1].points > 0 ? false : true
+              superusers && superusers.includes(auth.uid) && user[1].points > 0
+                ? false
+                : true
             }
           >
             <i className=' material-icons'>exposure_neg_1</i>
           </button>
           <button
             disabled={
-              superUsers.includes(auth.uid) && currentRunningGame ? false : true
+              superusers && superusers.includes(auth.uid) && currentRunningGame
+                ? false
+                : true
             }
             className='btn-floating btn-large waves-effect waves-light red'
             onClick={() => incrementPoint(user[1].id)}
@@ -227,7 +241,7 @@ function Users({
       <div className='row'>{data}</div>
       <span style={{ margin: '40px' }}>
         <button
-          disabled={superUsers.includes(auth.uid) ? false : true}
+          disabled={superusers && superusers.includes(auth.uid) ? false : true}
           type='submit'
           className='waves-effect waves-light btn-large'
           onClick={e => endGame(e)}
@@ -235,13 +249,12 @@ function Users({
           End Game
         </button>
         <button
-          disabled={superUsers.includes(auth.uid) ? false : true}
+          disabled={superusers && superusers.includes(auth.uid) ? false : true}
           type='submit'
           className='waves-effect waves-light btn-large'
           onClick={e => {
             currentRunningGame ? cancelStartGame(e) : beginGame(e);
           }}
-          //  onClick={e => beginGame(e)}
         >
           {currentRunningGame ? 'Cancel Game' : 'Start Game'}
         </button>
@@ -261,10 +274,16 @@ const mapDispatchToprops = dispatch => {
   };
 };
 const mapStateToProps = state => {
+  let superU =
+    state.firestore.ordered.superusers &&
+    state.firestore.ordered.superusers.map(u => {
+      return u.user;
+    });
   return {
     users: state.firestore.ordered.users,
     auth: state.firebase.auth,
     runningGame: state.firestore.ordered.runningGame,
+    superusers: superU,
   };
 };
 
@@ -275,6 +294,9 @@ export default compose(
     {
       collection: 'users',
       orderBy: 'points',
+    },
+    {
+      collection: 'superusers',
     },
   ])
 )(withRouter(Users));

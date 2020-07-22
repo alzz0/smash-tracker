@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import { compose } from 'redux';
+
 import Dashboard from './components/dashboard/Dashboard.js';
 import Navbar from './components/layout/Navbar.js';
 import ProjectDetails from './components/projects/ProjectDetails';
@@ -12,7 +10,7 @@ import CreateProject from './components/projects/CreateProject.js';
 import Profile from './components/profile/Profile.js';
 import Users from './components/users/Users.js';
 import Scoreboard from './components/scoreboard/Scoreboard';
-import { setHighestScore } from './store/actions/userAction';
+
 function App() {
   return (
     <BrowserRouter>
