@@ -26,7 +26,7 @@ export const decrementPoint = userId => {
 export const setScoreSum = () => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     let scoreIds = ['5ISbQ0MaoKw9xaNhRDhg', 'Sm8M4QIHNWIcOIXTZ5eH'];
-    let totals = [];
+
     const firebase = getFirebase();
     const db = firebase.firestore();
     for (let i = 0; i < scoreIds.length; i++) {
@@ -35,7 +35,7 @@ export const setScoreSum = () => {
 
         .get()
         .then(QuerySnapshot => {
-          let results = QuerySnapshot.get('scores');
+          return QuerySnapshot.get('scores');
         });
     }
   };
@@ -52,8 +52,7 @@ export const createbio = bio => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // make async call to db
     const firebase = getFirebase();
-    const firestore = getFirestore();
-    const profile = getState().firebase.profile;
+
     const authorId = getState().firebase.auth.uid;
     const db = firebase.firestore();
     const userBio = db.collection('users').doc(authorId);

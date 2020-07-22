@@ -7,10 +7,9 @@ function Scoreboard({ scoreboard, users }) {
   const [stateData, setStateData] = useState();
   const [leaderBoards, setLeaderBoard] = useState(false);
   const [scoreToggle, setScoreToggle] = useState(true);
-  const [filterValue, setFilterValue] = useState('sumPoints');
+
   var fullData = [];
   let days = [];
-  var points = [];
 
   useEffect(() => {
     handleSort();
@@ -19,8 +18,8 @@ function Scoreboard({ scoreboard, users }) {
   useEffect(() => {
     handleFilter();
   }, [scoreboard]);
-  var initData =
-    scoreboard &&
+
+  scoreboard &&
     scoreboard.map(score => {
       days.push(score);
     });
@@ -47,8 +46,7 @@ function Scoreboard({ scoreboard, users }) {
     }
   }
   function handleFilter(id) {
-    var data =
-      scoreboard &&
+    scoreboard &&
       scoreboard.map(score => {
         days.push(score);
         let latestScoresId = days[0].id;
@@ -70,7 +68,6 @@ function Scoreboard({ scoreboard, users }) {
   }
 
   function handleFilterSort(e) {
-    setFilterValue(e.target.value);
     handleSort(e.target.value);
   }
 
@@ -139,7 +136,6 @@ function Scoreboard({ scoreboard, users }) {
         style={{ maxWidth: '100%', fontSize: '16px' }}
         className='browser-default'
         onChange={e => handleFilterSort(e)}
-        // defaultValue={filterValue}
         defaultValue=''
       >
         <option disabled={true} value=''>

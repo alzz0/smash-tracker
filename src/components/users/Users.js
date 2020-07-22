@@ -5,7 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { SearchBox } from '../../utils/SearchBox';
 import './users.css';
-import { superUsers } from '../../constants';
+
 import { calcScore } from '../../store/actions/calcScore';
 import { startGame, cancelStartGame } from '../../store/actions/gameAction';
 import {
@@ -27,25 +27,15 @@ function Users({
   superusers,
 }) {
   const newObj = users && Object.entries(users);
-  let superusersList = [];
-  const [points, setPoints] = useState(0);
+
   const [searchUser, setSearchUser] = useState('');
-  const [checked, setChecked] = useState(false);
-  const [startCurrentGame, setStartCurrentGame] = useState(false);
+
   const [sortedUsers, setSortedUsers] = useState();
   var currentRunningGame = runningGame && runningGame[0].runningGame;
 
   function beginGame(e) {
     e.preventDefault();
     startGame();
-  }
-
-  useEffect(() => {
-    superusers && superusers.map(user => superusersList.push(user.id));
-    console.log(superusersList);
-  }, []);
-  if (superusersList.includes('jfZSJ5LfxDwzgONl1JZ7')) {
-    console.log('yes');
   }
 
   useEffect(() => {
@@ -63,11 +53,6 @@ function Users({
     e.preventDefault();
 
     for (let i = 0; i < users.length; i++) {
-      //let playedUsers = [];
-      // if (users[i].points > 0) {
-      //   console.log(users[i]);
-      //   playedUsers.push(users[i]);
-      // }
       if (users[i].points > 0) {
         var result = window.confirm('Are you sure?');
         if (result) {
@@ -82,17 +67,6 @@ function Users({
     setSearchUser(e.target.value);
   }
 
-  function fighterPlaying(e) {
-    e.preventDefault();
-  }
-
-  function handleSwitchChange(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setChecked(!checked);
-    //setChecked({ ...checked, [e.target.id]: !e.target.value });
-  }
   if (currentRunningGame === true) {
     var filteredUsers =
       newObj &&

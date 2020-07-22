@@ -1,7 +1,7 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import moment from 'moment';
+import React, { useState, Fragment } from 'react';
+
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { createbio } from '../../store/actions/userAction';
@@ -10,7 +10,7 @@ import SuperUserProfile from './SuperUserProfile';
 function Profile({ user, createbio, auth, history, signOut, match }) {
   const [bio, setBio] = useState({ bio: '' });
   const [edit, setEdit] = useState(false);
-  const [controlPanel, setControlPanel] = useState(true);
+  const [controlPanel, setControlPanel] = useState(false);
 
   if (user) {
     var date = user.createdAt.seconds * 1000;
@@ -32,14 +32,11 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
   function handleChange(e) {
     setBio({ ...bio, [e.target.name]: e.target.value });
   }
-  function makeFigherOfTheNight(e) {
-    console.log(e.target.value);
-  }
 
   function handleControlPanelChange() {
     setControlPanel(!controlPanel);
   }
-  if (auth.uid === 'yxHKf6gbiMVJCyW5PqLTUEDiYu23' && controlPanel) {
+  if (controlPanel) {
     return (
       <Fragment>
         <button
@@ -138,9 +135,9 @@ function Profile({ user, createbio, auth, history, signOut, match }) {
         </button>
 
         {match.params.id === auth.uid && (
-          <a className=' waves-effect waves-light btn' onClick={signOut}>
+          <span className=' waves-effect waves-light btn' onClick={signOut}>
             Log Out
-          </a>
+          </span>
         )}
       </div>
     );

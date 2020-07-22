@@ -1,5 +1,4 @@
 export const addSuperUser = user => {
-  console.log(user);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     firestore.collection('superusers').add({

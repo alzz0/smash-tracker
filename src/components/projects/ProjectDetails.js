@@ -139,7 +139,7 @@ function ProjectDetails(props) {
             )}
           </h6>
 
-          {editCommentState && com.commentId == commentId ? (
+          {editCommentState && com.commentId === commentId ? (
             <form
               style={{ padding: '0', margin: '0' }}
               onSubmit={handleCommentUpdateSubmit}

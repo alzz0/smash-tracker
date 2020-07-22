@@ -101,7 +101,6 @@ export const likePost = (postId, unfilteredAuth) => {
   };
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
-    const firestore = getFirestore();
 
     const db = firebase.firestore();
 
@@ -124,16 +123,13 @@ export const deletePost = id => {
 };
 
 export const updateProjectContent = (updateProject, id) => {
-  console.log(updateProject);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // make async call to db
     const firebase = getFirebase();
-    const firestore = getFirestore();
-    const profile = getState().firebase.profile;
-    const authorId = getState().firebase.auth.uid;
+
     const db = firebase.firestore();
     const project = db.collection('projects').doc(id);
-    console.log(project);
+
     project.update(updateProject);
   };
 };

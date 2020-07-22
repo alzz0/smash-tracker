@@ -28,9 +28,8 @@ function Dashboard({
       return user.points;
     });
   calculate();
-  var champ = Math.max(scoreBoard);
+  Math.max(scoreBoard);
   function calculate() {
-    //var highestNum = 0;
     if (scoreBoard) {
       for (var i = 0; i < scoreBoard.length; i++) {
         if (scoreBoard[i] > highestNum) {
@@ -55,7 +54,7 @@ function Dashboard({
         </div>
       </div>
       {/* version number */}
-      <p style={{ opacity: '0.1' }}>v1.1.4</p>
+      <p style={{ opacity: '0.1' }}>v1.1.6</p>
     </div>
   );
 }
