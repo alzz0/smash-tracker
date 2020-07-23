@@ -1,17 +1,19 @@
-export const addSuperUser = user => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firestore = getFirestore();
-    firestore.collection('superusers').add({
-      user,
-    });
-  };
-};
-
 export const deleteSuperUser = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
-    const db = firebase.firestore();
 
-    db.collection('superusers').doc(id).delete();
+    const db = firebase.firestore();
+    const userBio = db.collection('users').doc(id);
+    userBio.update({ superUser: false });
+  };
+};
+
+export const createSuperUser = id => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+
+    const db = firebase.firestore();
+    const userBio = db.collection('users').doc(id);
+    userBio.update({ superUser: true });
   };
 };

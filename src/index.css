@@ -139,10 +139,9 @@ th {
 }
 
 .current-superuser {
-  text-decoration: line-through;
-  cursor: not-allowed;
+  font-weight: bold;
 }
 
-.current-superuser:hover {
-  background: none;
+.control-grid .card {
+  cursor: pointer;
 }

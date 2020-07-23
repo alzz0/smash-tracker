@@ -49,6 +49,7 @@ export const setHighestScore = score => (dispatch, getState) => {
 };
 
 export const createbio = bio => {
+  console.log(bio);
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // make async call to db
     const firebase = getFirebase();

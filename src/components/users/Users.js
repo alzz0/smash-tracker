@@ -27,9 +27,8 @@ function Users({
   superusers,
 }) {
   const newObj = users && Object.entries(users);
-
+  const [superUserState, setSuperUserState] = useState();
   const [searchUser, setSearchUser] = useState('');
-
   const [sortedUsers, setSortedUsers] = useState();
   var currentRunningGame = runningGame && runningGame[0].runningGame;
 
@@ -39,7 +38,15 @@ function Users({
   }
 
   useEffect(() => {
+    var superUsers = [];
     handleSort();
+    users &&
+      users.map(user => {
+        if (user.superUser) {
+          superUsers.push(user.id);
+        }
+      });
+    setSuperUserState(superUsers);
   }, [users]);
   function handleSort() {
     // sort by total points
@@ -184,9 +191,10 @@ function Users({
           <button
             className='btn-floating btn-large waves-effect waves-light red'
             onClick={() => decrementPoint(user[1].id)}
-            // disabled={superUsers.includes(auth.uid) ? false : true}
             disabled={
-              superusers && superusers.includes(auth.uid) && user[1].points > 0
+              superUserState &&
+              superUserState.includes(auth.uid) &&
+              user[1].points > 0
                 ? false
                 : true
             }
@@ -195,7 +203,9 @@ function Users({
           </button>
           <button
             disabled={
-              superusers && superusers.includes(auth.uid) && currentRunningGame
+              superUserState &&
+              superUserState.includes(auth.uid) &&
+              currentRunningGame
                 ? false
                 : true
             }
@@ -215,7 +225,9 @@ function Users({
       <div className='row'>{data}</div>
       <span style={{ margin: '40px' }}>
         <button
-          disabled={superusers && superusers.includes(auth.uid) ? false : true}
+          disabled={
+            superUserState && superUserState.includes(auth.uid) ? false : true
+          }
           type='submit'
           className='waves-effect waves-light btn-large'
           onClick={e => endGame(e)}
@@ -223,7 +235,9 @@ function Users({
           End Game
         </button>
         <button
-          disabled={superusers && superusers.includes(auth.uid) ? false : true}
+          disabled={
+            superUserState && superUserState.includes(auth.uid) ? false : true
+          }
           type='submit'
           className='waves-effect waves-light btn-large'
           onClick={e => {
