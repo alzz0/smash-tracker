@@ -30,9 +30,9 @@ function SuperUserProfile({
   }, [users]);
 
   function selectedUser(e) {
-    if (superUsersState.includes(e.target.id)) {
+    if (superUsersState.includes(e.target.id) && e.target.id) {
       deleteSuperUser(e.target.id);
-    } else {
+    } else if (e.target.id) {
       createSuperUser(e.target.id);
     }
   }
