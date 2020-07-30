@@ -139,17 +139,17 @@ function Scoreboard({ scoreboard, users }) {
         defaultValue=''
       >
         <option disabled={true} value=''>
-          Filter by total points or game average
+          Sort results
         </option>
         <option key={'sumPoints'} id={'sumPoints'} value={'sumPoints'}>
-          Totalpoints
+          Total points
         </option>
         <option
           key={'averagePoints'}
           id={'averagePoints'}
           value={'averagePoints'}
         >
-          Average Points
+          Average points
         </option>
       </select>
       <table className='striped'>
