@@ -7,9 +7,6 @@ function SignedInLinks(props) {
   return (
     <ul className='right '>
       <li>
-        <NavLink to='/create'>Create</NavLink>
-      </li>
-      <li>
         <NavLink to='/users'>Fighters</NavLink>
       </li>
       <li>
@@ -29,11 +26,11 @@ function SignedInLinks(props) {
   );
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.firebase.auth,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   signOut: () => dispatch(signOut()),
 });
 export default connect(
