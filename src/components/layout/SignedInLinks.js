@@ -7,6 +7,9 @@ function SignedInLinks(props) {
   return (
     <ul className='right '>
       <li>
+        <NavLink to='/tournament'>Tournament</NavLink>
+      </li>
+      <li>
         <NavLink to='/users'>Fighters</NavLink>
       </li>
       <li>

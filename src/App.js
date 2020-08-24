@@ -10,6 +10,7 @@ import CreateProject from './components/projects/CreateProject.js';
 import Profile from './components/profile/Profile.js';
 import Users from './components/users/Users.js';
 import Scoreboard from './components/scoreboard/Scoreboard';
+import Tournament from './components/tournament/Tournament';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/profile/:id' component={Profile} />
           <Route path='/users' component={Users} />
           <Route path='/scoreboard' component={Scoreboard} />
+          <Route path='/tournament' component={Tournament} />
         </Switch>
       </div>
     </BrowserRouter>
